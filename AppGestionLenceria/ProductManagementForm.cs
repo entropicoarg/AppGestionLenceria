@@ -1,16 +1,18 @@
 
 using Domain.Entities;
+using Microsoft.Extensions.DependencyInjection;
 using Services.Services;
 
 namespace AppGestionLenceria
 {
-    public partial class ProductManagementForm : AppGestionLenceria.BaseForm
+    public partial class ProductManagementForm : Form
     {
         private readonly IProductService _productService;
         private readonly ISupplierService _supplierService;
         private readonly ISizeService _sizeService;
         private readonly IColorService _colorService;
         private readonly ICategoryService _categoryService;
+        protected IServiceProvider ServiceProvider { get; }
 
         // UI Controls
         private DataGridView dgvProducts;
@@ -29,7 +31,7 @@ namespace AppGestionLenceria
 
         private int? selectedProductId = null;
 
-        public ProductManagementForm(IServiceProvider serviceProvider) : base(serviceProvider)
+        public ProductManagementForm(IServiceProvider serviceProvider)
         {
             _productService = GetService<IProductService>();
             _supplierService = GetService<ISupplierService>();
@@ -244,6 +246,11 @@ namespace AppGestionLenceria
             {
                 clbCategories.SetItemChecked(i, false);
             }
+        }
+
+        protected T GetService<T>() where T : class
+        {
+            return ServiceProvider.GetService<T>();
         }
     }
 }
