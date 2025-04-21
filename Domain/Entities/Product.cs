@@ -34,5 +34,11 @@ namespace Domain.Entities
         public virtual ICollection<ProductColor> ProductColors { get; set; } = new List<ProductColor>();
         public virtual ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
         public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
+
+        public Product()
+        {
+            CreationDate = DateTime.Now;
+            LastModificationDate = DateTime.Now;
+        }
     }
 }

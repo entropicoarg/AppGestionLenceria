@@ -30,7 +30,13 @@ namespace Data
         public static void Initialize(LingerieDbContext context)
         {
             // Ensure database exists and is created
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
+
+            // Apply migrations instead of EnsureCreated
+            context.Database.Migrate();
+
+            // Here you can add seed data if needed
+            // SeedData(context);
         }
 
         private static void RegisterRepositories(IServiceCollection services)

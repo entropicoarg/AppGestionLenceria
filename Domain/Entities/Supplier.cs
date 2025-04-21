@@ -15,5 +15,11 @@ namespace Domain.Entities
 
         // Propiedades de navegación
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
+        public Supplier()
+        {
+            CreationDate = DateTime.Now;
+            LastModificationDate = DateTime.Now;
+        }
     }
 }
