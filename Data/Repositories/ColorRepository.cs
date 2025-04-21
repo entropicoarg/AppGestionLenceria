@@ -30,5 +30,27 @@ namespace Data.Repositories
                 .ThenInclude(pc => pc.Product)
                 .FirstOrDefaultAsync(c => c.Id == colorId);
         }
+
+        public async Task AddProductColorAsync(int productId, int colorId)
+        {
+            var productColor = new ProductColor
+            {
+                ProductId = productId,
+                ColorId = colorId
+            };
+
+            await _context.ProductColors.AddAsync(productColor);
+        }
+
+        public async Task RemoveProductColorAsync(int productId, int colorId)
+        {
+            var productColor = await _context.ProductColors
+                .FirstOrDefaultAsync(pc => pc.ProductId == productId && pc.ColorId == colorId);
+
+            if (productColor != null)
+            {
+                _context.ProductColors.Remove(productColor);
+            }
+        }
     }
 }

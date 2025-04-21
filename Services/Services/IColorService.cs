@@ -15,7 +15,7 @@ namespace Services.Services
         Task<Color> CreateAsync(Color color);
         Task UpdateAsync(Color color);
         Task DeleteAsync(int id);
-        //Task AddProductColorAsync(int productId, int colorId);
-        //Task RemoveProductColorAsync(int productId, int colorId);
+        Task AddProductColorAsync(int productId, int colorId);
+        Task RemoveProductColorAsync(int productId, int colorId);
     }
 }

@@ -11,5 +11,9 @@ namespace Data.Repositories
     {
         Task<IEnumerable<Product>> GetProductsByCategoryAsync(int categoryId);
         Task<Category> GetWithProductsAsync(int categoryId);
+
+        Task RemoveProductCategoryAsync(int productId, int categoryId);
+
+        Task AddProductCategoryAsync(int productId, int categoryId);
     }
 }

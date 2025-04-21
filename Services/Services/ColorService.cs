@@ -61,17 +61,17 @@ namespace Services.Services
             _unitOfWork.Colors.Delete(color);
             await _unitOfWork.CompleteAsync();
         }
+                
+        public async Task AddProductColorAsync(int productId, int colorId)
+        {
+            await _unitOfWork.Colors.AddProductColorAsync(productId, colorId);
+            await _unitOfWork.CompleteAsync();
+        }
 
-        //public async Task AddProductColorAsync(int productId, int colorId)
-        //{
-        //    await _unitOfWork.Colors.AddAsync(productId, colorId);
-        //    await _unitOfWork.CompleteAsync();
-        //}
-
-        //public async Task RemoveProductColorAsync(int productId, int colorId)
-        //{
-        //    await _unitOfWork.Colors.RemoveProductColorAsync(productId, colorId);
-        //    await _unitOfWork.CompleteAsync();
-        //}
+        public async Task RemoveProductColorAsync(int productId, int colorId)
+        {
+            await _unitOfWork.Colors.RemoveProductColorAsync(productId, colorId);
+            await _unitOfWork.CompleteAsync();
+        }
     }
 }

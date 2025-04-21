@@ -62,16 +62,16 @@ namespace Services.Services
             await _unitOfWork.CompleteAsync();
         }
 
-        //public async Task AddProductCategoryAsync(int productId, int categoryId)
-        //{
-        //    await _unitOfWork.Categories.AddProductCategoryAsync(productId, categoryId);
-        //    await _unitOfWork.CompleteAsync();
-        //}
+        public async Task AddProductCategoryAsync(int productId, int categoryId)
+        {
+            await _unitOfWork.Categories.AddProductCategoryAsync(productId, categoryId);
+            await _unitOfWork.CompleteAsync();
+        }
 
-        //public async Task RemoveProductCategoryAsync(int productId, int categoryId)
-        //{
-        //    await _unitOfWork.Categories.RemoveProductCategoryAsync(productId, categoryId);
-        //    await _unitOfWork.CompleteAsync();
-        //}
+        public async Task RemoveProductCategoryAsync(int productId, int categoryId)
+        {
+            await _unitOfWork.Categories.RemoveProductCategoryAsync(productId, categoryId);
+            await _unitOfWork.CompleteAsync();
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace AppGestionLenceria
 {
-    partial class Form1
+    partial class ProductManagementForm
     {
         /// <summary>
         ///  Required designer variable.

@@ -11,5 +11,8 @@ namespace Data.Repositories
     {
         Task<IEnumerable<Product>> GetProductsByColorAsync(int colorId);
         Task<Color> GetWithProductsAsync(int colorId);
+        Task AddProductColorAsync(int productId, int colorId);
+        Task RemoveProductColorAsync(int productId, int colorId);
+
     }
 }

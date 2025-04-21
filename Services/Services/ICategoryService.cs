@@ -15,7 +15,7 @@ namespace Services.Services
         Task<Category> CreateAsync(Category category);
         Task UpdateAsync(Category category);
         Task DeleteAsync(int id);
-        //Task AddProductCategoryAsync(int productId, int categoryId);
-        //Task RemoveProductCategoryAsync(int productId, int categoryId);
+        Task AddProductCategoryAsync(int productId, int categoryId);
+        Task RemoveProductCategoryAsync(int productId, int categoryId);
     }
 }
