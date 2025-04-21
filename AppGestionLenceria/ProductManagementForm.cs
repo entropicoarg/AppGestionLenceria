@@ -39,8 +39,7 @@ namespace AppGestionLenceria
             _colorService = GetService<IColorService>();
             _categoryService = GetService<ICategoryService>();
 
-            InitializeComponent();
-            LoadData();
+            InitializeComponent();            
         }
 
         private async Task LoadData()
@@ -246,6 +245,11 @@ namespace AppGestionLenceria
             {
                 clbCategories.SetItemChecked(i, false);
             }
+        }
+
+        private async void ProductManagementForm_Load(object sender, EventArgs e)
+        {
+            await LoadData();
         }
 
         protected T GetService<T>() where T : class
