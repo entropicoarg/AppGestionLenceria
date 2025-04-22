@@ -14,20 +14,6 @@ namespace AppGestionLenceria
         private readonly ICategoryService _categoryService;
         protected IServiceProvider ServiceProvider { get; }
 
-        // UI Controls
-        private DataGridView dgvProducts;
-        private TextBox txtName;
-        private NumericUpDown numQuantity;
-        private NumericUpDown numCost;
-        private NumericUpDown numDiscount;
-        private TextBox txtSKU;
-        private ComboBox cmbSupplier;
-        private ComboBox cmbSize;
-        private CheckedListBox clbColors;
-        private CheckedListBox clbCategories;
-        private Button btnSave;
-        private Button btnDelete;
-        private Button btnClear;
 
         private int? selectedProductId = null;
 
@@ -39,7 +25,7 @@ namespace AppGestionLenceria
             _colorService = GetService<IColorService>();
             _categoryService = GetService<ICategoryService>();
 
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private async Task LoadData()
@@ -81,43 +67,62 @@ namespace AppGestionLenceria
             clbCategories.ValueMember = "Id";
         }
 
-        private async void dgvProducts_SelectionChanged(object sender, EventArgs e)
+        private void ClearForm()
         {
-            if (dgvProducts.SelectedRows.Count > 0)
+            selectedProductId = null;
+            txtName.Text = string.Empty;
+            numQuantity.Value = 0;
+            numCost.Value = 0;
+            numDiscount.Value = 0;
+            txtSKU.Text = string.Empty;
+
+            // Clear selections
+            if (cmbSupplier.Items.Count > 0) cmbSupplier.SelectedIndex = 0;
+            if (cmbSize.Items.Count > 0) cmbSize.SelectedIndex = 0;
+
+            // Uncheck all colors and categories
+            for (int i = 0; i < clbColors.Items.Count; i++)
             {
-                // Get selected product ID
-                selectedProductId = (int)dgvProducts.SelectedRows[0].Cells["Id"].Value;
+                clbColors.SetItemChecked(i, false);
+            }
 
-                // Load product with all relations
-                var product = await _productService.GetWithAllRelationsAsync(selectedProductId.Value);
+            for (int i = 0; i < clbCategories.Items.Count; i++)
+            {
+                clbCategories.SetItemChecked(i, false);
+            }
+        }
 
-                // Fill form fields
-                txtName.Text = product.Name;
-                numQuantity.Value = product.Quantity;
-                numCost.Value = product.Cost;
-                numDiscount.Value = product.DiscountAmount;
-                txtSKU.Text = product.SKU;
+        private async void ProductManagementForm_Load(object sender, EventArgs e)
+        {
+            await LoadData();
+        }
 
-                // Select supplier and size
-                cmbSupplier.SelectedValue = product.SupplierId;
-                cmbSize.SelectedValue = product.SizeId;
+        private void btnClear_Click_1(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
 
-                // Check colors
-                var productColors = await _productService.GetProductColorsAsync(selectedProductId.Value);
-                for (int i = 0; i < clbColors.Items.Count; i++)
+        private async void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (!selectedProductId.HasValue)
+            {
+                MessageBox.Show("Please select a product to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to delete this product?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                try
                 {
-                    var color = (Domain.Entities.Color)clbColors.Items[i];
-                    bool isSelected = productColors.Any(c => c.Id == color.Id);
-                    clbColors.SetItemChecked(i, isSelected);
+                    await _productService.DeleteAsync(selectedProductId.Value);
+                    MessageBox.Show("Product deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    ClearForm();
+                    await LoadData();
                 }
-
-                // Check categories
-                var productCategories = await _productService.GetProductCategoriesAsync(selectedProductId.Value);
-                for (int i = 0; i < clbCategories.Items.Count; i++)
+                catch (Exception ex)
                 {
-                    var category = (Category)clbCategories.Items[i];
-                    bool isSelected = productCategories.Any(c => c.Id == category.Id);
-                    clbCategories.SetItemChecked(i, isSelected);
+                    MessageBox.Show($"Error deleting product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -192,64 +197,45 @@ namespace AppGestionLenceria
             }
         }
 
-        private async void btnDelete_Click(object sender, EventArgs e)
+        private async void dgvProducts_SelectionChanged(object sender, EventArgs e)
         {
-            if (!selectedProductId.HasValue)
+            if (dgvProducts.SelectedRows.Count > 0)
             {
-                MessageBox.Show("Please select a product to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                // Get selected product ID
+                selectedProductId = (int)dgvProducts.SelectedRows[0].Cells["Id"].Value;
 
-            if (MessageBox.Show("Are you sure you want to delete this product?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                try
+                // Load product with all relations
+                var product = await _productService.GetWithAllRelationsAsync(selectedProductId.Value);
+
+                // Fill form fields
+                txtName.Text = product.Name;
+                numQuantity.Value = product.Quantity;
+                numCost.Value = product.Cost;
+                numDiscount.Value = product.DiscountAmount;
+                txtSKU.Text = product.SKU;
+
+                // Select supplier and size
+                cmbSupplier.SelectedValue = product.SupplierId;
+                cmbSize.SelectedValue = product.SizeId;
+
+                // Check colors
+                var productColors = await _productService.GetProductColorsAsync(selectedProductId.Value);
+                for (int i = 0; i < clbColors.Items.Count; i++)
                 {
-                    await _productService.DeleteAsync(selectedProductId.Value);
-                    MessageBox.Show("Product deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    ClearForm();
-                    await LoadData();
+                    var color = (Domain.Entities.Color)clbColors.Items[i];
+                    bool isSelected = productColors.Any(c => c.Id == color.Id);
+                    clbColors.SetItemChecked(i, isSelected);
                 }
-                catch (Exception ex)
+
+                // Check categories
+                var productCategories = await _productService.GetProductCategoriesAsync(selectedProductId.Value);
+                for (int i = 0; i < clbCategories.Items.Count; i++)
                 {
-                    MessageBox.Show($"Error deleting product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    var category = (Category)clbCategories.Items[i];
+                    bool isSelected = productCategories.Any(c => c.Id == category.Id);
+                    clbCategories.SetItemChecked(i, isSelected);
                 }
             }
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-        }
-
-        private void ClearForm()
-        {
-            selectedProductId = null;
-            txtName.Text = string.Empty;
-            numQuantity.Value = 0;
-            numCost.Value = 0;
-            numDiscount.Value = 0;
-            txtSKU.Text = string.Empty;
-
-            // Clear selections
-            if (cmbSupplier.Items.Count > 0) cmbSupplier.SelectedIndex = 0;
-            if (cmbSize.Items.Count > 0) cmbSize.SelectedIndex = 0;
-
-            // Uncheck all colors and categories
-            for (int i = 0; i < clbColors.Items.Count; i++)
-            {
-                clbColors.SetItemChecked(i, false);
-            }
-
-            for (int i = 0; i < clbCategories.Items.Count; i++)
-            {
-                clbCategories.SetItemChecked(i, false);
-            }
-        }
-
-        private async void ProductManagementForm_Load(object sender, EventArgs e)
-        {
-            await LoadData();
         }
 
         protected T GetService<T>() where T : class
