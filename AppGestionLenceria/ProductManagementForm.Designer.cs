@@ -273,7 +273,7 @@
             Controls.Add(txtName);
             Controls.Add(dgvProducts);
             Name = "ProductManagementForm";
-            Text = "Form1";
+            Text = "Gestion de productos";
             Load += ProductManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();

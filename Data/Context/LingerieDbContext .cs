@@ -35,6 +35,7 @@ namespace Data.Context
             modelBuilder.Entity<Supplier>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.CreationDate).IsRequired();
                 entity.Property(e => e.LastModificationDate).IsRequired();
@@ -44,6 +45,7 @@ namespace Data.Context
             modelBuilder.Entity<Color>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
             });
 
@@ -51,6 +53,7 @@ namespace Data.Context
             modelBuilder.Entity<Size>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(20);
             });
 
@@ -58,6 +61,7 @@ namespace Data.Context
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
             });
 
@@ -93,6 +97,7 @@ namespace Data.Context
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
                 entity.Property(e => e.CreationDate).IsRequired();
                 entity.Property(e => e.LastModificationDate).IsRequired();
@@ -119,6 +124,7 @@ namespace Data.Context
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Phone).HasMaxLength(20);
                 entity.Property(e => e.Email).HasMaxLength(100);
@@ -129,6 +135,7 @@ namespace Data.Context
             modelBuilder.Entity<Sale>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.SaleDate).IsRequired();
                 entity.Property(e => e.TotalPrice).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.TicketNumber).HasMaxLength(50);
@@ -146,6 +153,7 @@ namespace Data.Context
             modelBuilder.Entity<SaleDetail>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Quantity).IsRequired();
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(18,2)");
 

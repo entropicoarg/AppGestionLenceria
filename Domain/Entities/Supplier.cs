@@ -21,5 +21,6 @@ namespace Domain.Entities
             CreationDate = DateTime.Now;
             LastModificationDate = DateTime.Now;
         }
+        
     }
 }

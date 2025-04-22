@@ -19,6 +19,7 @@ namespace AppGestionLenceria
 
         public ProductManagementForm(IServiceProvider serviceProvider)
         {
+            ServiceProvider = serviceProvider;
             _productService = GetService<IProductService>();
             _supplierService = GetService<ISupplierService>();
             _sizeService = GetService<ISizeService>();
