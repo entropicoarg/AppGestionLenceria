@@ -40,10 +40,15 @@
             // dgvSuppliers
             // 
             dgvSuppliers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvSuppliers.EditMode = DataGridViewEditMode.EditProgrammatically;
             dgvSuppliers.Location = new Point(196, 27);
+            dgvSuppliers.MultiSelect = false;
             dgvSuppliers.Name = "dgvSuppliers";
+            dgvSuppliers.ReadOnly = true;
+            dgvSuppliers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvSuppliers.Size = new Size(433, 262);
             dgvSuppliers.TabIndex = 0;
+            dgvSuppliers.SelectionChanged += dgvSuppliers_SelectionChanged;
             // 
             // label1
             // 
@@ -69,6 +74,7 @@
             btnClear.TabIndex = 10;
             btnClear.Text = "Limpiar";
             btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
             // 
             // btnDelete
             // 
@@ -78,6 +84,7 @@
             btnDelete.TabIndex = 11;
             btnDelete.Text = "Eliminar";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnSave
             // 
@@ -87,7 +94,7 @@
             btnSave.TabIndex = 12;
             btnSave.Text = "Guardar";
             btnSave.UseVisualStyleBackColor = true;
-            btnSave.Click += this.btnSave_Click;
+            btnSave.Click += btnSave_Click;
             // 
             // SupplierManagementForm
             // 
@@ -100,8 +107,11 @@
             Controls.Add(txtName);
             Controls.Add(label1);
             Controls.Add(dgvSuppliers);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "SupplierManagementForm";
             Text = "Gestion de proveedores";
+            WindowState = FormWindowState.Maximized;
+            Load += SupplierManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvSuppliers).EndInit();
             ResumeLayout(false);
             PerformLayout();

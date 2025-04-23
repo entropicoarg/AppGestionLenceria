@@ -50,10 +50,10 @@ namespace Services.Services
             if (existingSupplier == null)
                 throw new KeyNotFoundException($"Supplier with ID {supplier.Id} not found.");
 
-            supplier.CreationDate = existingSupplier.CreationDate;
-            supplier.LastModificationDate = DateTime.Now;
+            existingSupplier.Name = supplier.Name;
+            existingSupplier.LastModificationDate = DateTime.Now;
 
-            _unitOfWork.Suppliers.Update(supplier);
+            _unitOfWork.Suppliers.Update(existingSupplier);
             await _unitOfWork.CompleteAsync();
         }
 

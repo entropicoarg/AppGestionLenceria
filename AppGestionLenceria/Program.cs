@@ -3,6 +3,7 @@ using System.Configuration;
 using Data;
 using Services.Services;
 using Data.Context;
+using UI;
 
 
 
@@ -45,7 +46,7 @@ namespace AppGestionLenceria
             
             //Initialice app
             ApplicationConfiguration.Initialize();
-            Application.Run(new ProductManagementForm(ServiceProvider));
+            Application.Run(new InitForm(ServiceProvider));
         }
     }
 }

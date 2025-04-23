@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGestionLenceria", "AppGestionLenceria\AppGestionLenceria.csproj", "{5EFC55BD-EA71-48F9-8910-2E2F2A548F1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "AppGestionLenceria\UI.csproj", "{5EFC55BD-EA71-48F9-8910-2E2F2A548F1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{6E5BB719-1D6A-40FD-9F04-9B0896646895}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{6E5BB719-1D6A-40FD-9F04-9B0896646895}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{6545D3C9-1C70-4F51-9FAD-14EA203EBCFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{6545D3C9-1C70-4F51-9FAD-14EA203EBCFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{CAC8F5C3-DE5C-4A94-82D8-F69F6BB9BBDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{CAC8F5C3-DE5C-4A94-82D8-F69F6BB9BBDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

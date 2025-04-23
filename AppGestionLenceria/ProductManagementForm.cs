@@ -16,6 +16,7 @@ namespace AppGestionLenceria
 
 
         private int? selectedProductId = null;
+        private IEnumerable<Product> _products = Enumerable.Empty<Product>();
 
         public ProductManagementForm(IServiceProvider serviceProvider)
         {
@@ -32,8 +33,8 @@ namespace AppGestionLenceria
         private async Task LoadData()
         {
             // Load products for the grid
-            var products = await _productService.GetAllAsync();
-            dgvProducts.DataSource = products.ToList();
+            _products = await _productService.GetAllAsync();
+            dgvProducts.DataSource = _products.ToList();
 
             // Load suppliers for dropdown
             var suppliers = await _supplierService.GetAllAsync();
@@ -154,6 +155,7 @@ namespace AppGestionLenceria
                 else
                 {
                     product = await _productService.CreateAsync(product);
+                    //TODO need to retrieve the ID from the db since it's generated there. 
                     selectedProductId = product.Id;
                 }
 
@@ -191,6 +193,7 @@ namespace AppGestionLenceria
 
                 // Reload data
                 await LoadData();
+                selectedProductId = _products.FirstOrDefault(s => s.Name == product.Name).Id;
             }
             catch (Exception ex)
             {
