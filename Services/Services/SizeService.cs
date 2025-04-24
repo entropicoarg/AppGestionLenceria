@@ -42,7 +42,9 @@ namespace Services.Services
             if (existingSize == null)
                 throw new KeyNotFoundException($"Size with ID {size.Id} not found.");
 
-            _unitOfWork.Sizes.Update(size);
+            existingSize.Name = size.Name;
+
+            _unitOfWork.Sizes.Update(existingSize);
             await _unitOfWork.CompleteAsync();
         }
 
