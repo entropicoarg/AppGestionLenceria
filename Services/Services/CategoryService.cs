@@ -47,7 +47,9 @@ namespace Services.Services
             if (existingCategory == null)
                 throw new KeyNotFoundException($"Category with ID {category.Id} not found.");
 
-            _unitOfWork.Categories.Update(category);
+            existingCategory.Name = category.Name;            
+
+            _unitOfWork.Categories.Update(existingCategory);
             await _unitOfWork.CompleteAsync();
         }
 
