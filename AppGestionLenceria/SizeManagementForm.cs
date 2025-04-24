@@ -49,7 +49,7 @@ namespace UI
             catch (Exception ex)
             {
 
-                MessageBox.Show($"Error Loading suppliers: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error Loading sizes: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -146,9 +146,9 @@ namespace UI
             {
                 selectedSizeId = (int)dgvSizes.SelectedRows[0].Cells["Id"].Value;
 
-                var category = await _sizeService.GetByIdAsync(selectedSizeId.Value);
+                var size = await _sizeService.GetByIdAsync(selectedSizeId.Value);
 
-                txtName.Text = category.Name;
+                txtName.Text = size.Name;
             }
         }
     }
