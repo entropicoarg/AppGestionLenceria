@@ -50,10 +50,16 @@
             btnSave = new Button();
             btnDelete = new Button();
             btnClear = new Button();
+            numRoundedPrice = new NumericUpDown();
+            label10 = new Label();
+            label11 = new Label();
+            numericUpDown1 = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numCost).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numDiscount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numRoundedPrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
             // dgvProducts
@@ -61,7 +67,7 @@
             dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProducts.Location = new Point(241, 36);
             dgvProducts.Name = "dgvProducts";
-            dgvProducts.Size = new Size(760, 434);
+            dgvProducts.Size = new Size(868, 622);
             dgvProducts.TabIndex = 0;
             dgvProducts.SelectionChanged += dgvProducts_SelectionChanged;
             // 
@@ -133,7 +139,7 @@
             // 
             // txtSKU
             // 
-            txtSKU.Location = new Point(27, 221);
+            txtSKU.Location = new Point(27, 323);
             txtSKU.Name = "txtSKU";
             txtSKU.Size = new Size(121, 23);
             txtSKU.TabIndex = 1;
@@ -141,7 +147,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(27, 202);
+            label5.Location = new Point(27, 304);
             label5.Name = "label5";
             label5.Size = new Size(28, 15);
             label5.TabIndex = 3;
@@ -150,7 +156,7 @@
             // cmbSupplier
             // 
             cmbSupplier.FormattingEnabled = true;
-            cmbSupplier.Location = new Point(27, 267);
+            cmbSupplier.Location = new Point(27, 369);
             cmbSupplier.Name = "cmbSupplier";
             cmbSupplier.Size = new Size(121, 23);
             cmbSupplier.TabIndex = 6;
@@ -158,7 +164,7 @@
             // cmbSize
             // 
             cmbSize.FormattingEnabled = true;
-            cmbSize.Location = new Point(27, 313);
+            cmbSize.Location = new Point(27, 415);
             cmbSize.Name = "cmbSize";
             cmbSize.Size = new Size(121, 23);
             cmbSize.TabIndex = 6;
@@ -166,7 +172,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(27, 248);
+            label6.Location = new Point(27, 350);
             label6.Name = "label6";
             label6.Size = new Size(61, 15);
             label6.TabIndex = 3;
@@ -175,7 +181,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(27, 294);
+            label7.Location = new Point(27, 396);
             label7.Name = "label7";
             label7.Size = new Size(49, 15);
             label7.TabIndex = 3;
@@ -184,7 +190,7 @@
             // clbColors
             // 
             clbColors.FormattingEnabled = true;
-            clbColors.Location = new Point(27, 359);
+            clbColors.Location = new Point(27, 459);
             clbColors.Name = "clbColors";
             clbColors.Size = new Size(120, 94);
             clbColors.TabIndex = 7;
@@ -192,7 +198,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(27, 340);
+            label8.Location = new Point(27, 440);
             label8.Name = "label8";
             label8.Size = new Size(47, 15);
             label8.TabIndex = 8;
@@ -201,7 +207,7 @@
             // clbCategories
             // 
             clbCategories.FormattingEnabled = true;
-            clbCategories.Location = new Point(27, 476);
+            clbCategories.Location = new Point(27, 576);
             clbCategories.Name = "clbCategories";
             clbCategories.Size = new Size(120, 94);
             clbCategories.TabIndex = 7;
@@ -209,7 +215,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(27, 457);
+            label9.Location = new Point(27, 557);
             label9.Name = "label9";
             label9.Size = new Size(63, 15);
             label9.TabIndex = 8;
@@ -217,7 +223,7 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(764, 476);
+            btnSave.Location = new Point(764, 664);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 23);
             btnSave.TabIndex = 9;
@@ -227,7 +233,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(845, 476);
+            btnDelete.Location = new Point(845, 664);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(75, 23);
             btnDelete.TabIndex = 9;
@@ -237,7 +243,7 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(926, 476);
+            btnClear.Location = new Point(926, 664);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(75, 23);
             btnClear.TabIndex = 9;
@@ -245,11 +251,47 @@
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click_1;
             // 
+            // numRoundedPrice
+            // 
+            numRoundedPrice.Location = new Point(27, 223);
+            numRoundedPrice.Name = "numRoundedPrice";
+            numRoundedPrice.Size = new Size(120, 23);
+            numRoundedPrice.TabIndex = 11;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(27, 204);
+            label10.Name = "label10";
+            label10.Size = new Size(110, 15);
+            label10.TabIndex = 10;
+            label10.Text = "Precio Redondeado";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(27, 249);
+            label11.Name = "label11";
+            label11.Size = new Size(110, 15);
+            label11.TabIndex = 10;
+            label11.Text = "Precio Redondeado";
+            // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Location = new Point(27, 268);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(120, 23);
+            numericUpDown1.TabIndex = 11;
+            // 
             // ProductManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1121, 598);
+            ClientSize = new Size(1121, 699);
+            Controls.Add(numericUpDown1);
+            Controls.Add(numRoundedPrice);
+            Controls.Add(label11);
+            Controls.Add(label10);
             Controls.Add(btnClear);
             Controls.Add(btnDelete);
             Controls.Add(btnSave);
@@ -272,13 +314,17 @@
             Controls.Add(txtSKU);
             Controls.Add(txtName);
             Controls.Add(dgvProducts);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "ProductManagementForm";
             Text = "Gestion de productos";
+            WindowState = FormWindowState.Maximized;
             Load += ProductManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();
             ((System.ComponentModel.ISupportInitialize)numCost).EndInit();
             ((System.ComponentModel.ISupportInitialize)numDiscount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numRoundedPrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -307,5 +353,9 @@
         private Button btnSave;
         private Button btnDelete;
         private Button btnClear;
+        private NumericUpDown numRoundedPrice;
+        private Label label10;
+        private Label label11;
+        private NumericUpDown numericUpDown1;
     }
 }

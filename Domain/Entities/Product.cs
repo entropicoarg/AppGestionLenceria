@@ -18,7 +18,7 @@ namespace Domain.Entities
         public decimal DiscountAmount { get; set; }
 
         // Calculated property
-        public decimal CalculatedPrice => Cost + DiscountAmount;
+        public decimal CalculatedPrice => Cost * DiscountAmount;
         public decimal RoundedPrice { get; set; }
         public string SKU { get; set; }
         public decimal Profitability { get; set; }

@@ -34,16 +34,17 @@
             gestionToolStripMenuItem = new ToolStripMenuItem();
             productosToolStripMenuItem = new ToolStripMenuItem();
             gestionToolStripMenuItem1 = new ToolStripMenuItem();
-            categoriasToolStripMenuItem = new ToolStripMenuItem();
-            coloresToolStripMenuItem = new ToolStripMenuItem();
-            tamañosToolStripMenuItem = new ToolStripMenuItem();
             ventasToolStripMenuItem = new ToolStripMenuItem();
+            gestionDePropiedadesToolStripMenuItem = new ToolStripMenuItem();
+            categoriasToolStripMenuItem1 = new ToolStripMenuItem();
+            tamañosToolStripMenuItem1 = new ToolStripMenuItem();
+            coloresToolStripMenuItem1 = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, proveedoresToolStripMenuItem, productosToolStripMenuItem, ventasToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, proveedoresToolStripMenuItem, productosToolStripMenuItem, ventasToolStripMenuItem, gestionDePropiedadesToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
@@ -66,13 +67,13 @@
             // gestionToolStripMenuItem
             // 
             gestionToolStripMenuItem.Name = "gestionToolStripMenuItem";
-            gestionToolStripMenuItem.Size = new Size(180, 22);
+            gestionToolStripMenuItem.Size = new Size(114, 22);
             gestionToolStripMenuItem.Text = "Gestion";
             gestionToolStripMenuItem.Click += gestionToolStripMenuItem_Click;
             // 
             // productosToolStripMenuItem
             // 
-            productosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionToolStripMenuItem1, categoriasToolStripMenuItem, coloresToolStripMenuItem, tamañosToolStripMenuItem });
+            productosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionToolStripMenuItem1 });
             productosToolStripMenuItem.Name = "productosToolStripMenuItem";
             productosToolStripMenuItem.Size = new Size(73, 20);
             productosToolStripMenuItem.Text = "Productos";
@@ -82,30 +83,41 @@
             gestionToolStripMenuItem1.Name = "gestionToolStripMenuItem1";
             gestionToolStripMenuItem1.Size = new Size(180, 22);
             gestionToolStripMenuItem1.Text = "Gestion";
-            // 
-            // categoriasToolStripMenuItem
-            // 
-            categoriasToolStripMenuItem.Name = "categoriasToolStripMenuItem";
-            categoriasToolStripMenuItem.Size = new Size(180, 22);
-            categoriasToolStripMenuItem.Text = "Categorias";
-            // 
-            // coloresToolStripMenuItem
-            // 
-            coloresToolStripMenuItem.Name = "coloresToolStripMenuItem";
-            coloresToolStripMenuItem.Size = new Size(180, 22);
-            coloresToolStripMenuItem.Text = "Colores";
-            // 
-            // tamañosToolStripMenuItem
-            // 
-            tamañosToolStripMenuItem.Name = "tamañosToolStripMenuItem";
-            tamañosToolStripMenuItem.Size = new Size(180, 22);
-            tamañosToolStripMenuItem.Text = "Tamaños";
+            gestionToolStripMenuItem1.Click += gestionToolStripMenuItem1_Click;
             // 
             // ventasToolStripMenuItem
             // 
             ventasToolStripMenuItem.Name = "ventasToolStripMenuItem";
             ventasToolStripMenuItem.Size = new Size(53, 20);
             ventasToolStripMenuItem.Text = "Ventas";
+            // 
+            // gestionDePropiedadesToolStripMenuItem
+            // 
+            gestionDePropiedadesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { categoriasToolStripMenuItem1, tamañosToolStripMenuItem1, coloresToolStripMenuItem1 });
+            gestionDePropiedadesToolStripMenuItem.Name = "gestionDePropiedadesToolStripMenuItem";
+            gestionDePropiedadesToolStripMenuItem.Size = new Size(143, 20);
+            gestionDePropiedadesToolStripMenuItem.Text = "Gestion de propiedades";
+            // 
+            // categoriasToolStripMenuItem1
+            // 
+            categoriasToolStripMenuItem1.Name = "categoriasToolStripMenuItem1";
+            categoriasToolStripMenuItem1.Size = new Size(130, 22);
+            categoriasToolStripMenuItem1.Text = "Categorias";
+            categoriasToolStripMenuItem1.Click += categoriasToolStripMenuItem1_Click;
+            // 
+            // tamañosToolStripMenuItem1
+            // 
+            tamañosToolStripMenuItem1.Name = "tamañosToolStripMenuItem1";
+            tamañosToolStripMenuItem1.Size = new Size(130, 22);
+            tamañosToolStripMenuItem1.Text = "Tamaños";
+            tamañosToolStripMenuItem1.Click += tamañosToolStripMenuItem1_Click;
+            // 
+            // coloresToolStripMenuItem1
+            // 
+            coloresToolStripMenuItem1.Name = "coloresToolStripMenuItem1";
+            coloresToolStripMenuItem1.Size = new Size(130, 22);
+            coloresToolStripMenuItem1.Text = "Colores";
+            coloresToolStripMenuItem1.Click += coloresToolStripMenuItem1_Click;
             // 
             // InitForm
             // 
@@ -131,9 +143,10 @@
         private ToolStripMenuItem gestionToolStripMenuItem;
         private ToolStripMenuItem productosToolStripMenuItem;
         private ToolStripMenuItem gestionToolStripMenuItem1;
-        private ToolStripMenuItem categoriasToolStripMenuItem;
-        private ToolStripMenuItem coloresToolStripMenuItem;
-        private ToolStripMenuItem tamañosToolStripMenuItem;
         private ToolStripMenuItem ventasToolStripMenuItem;
+        private ToolStripMenuItem gestionDePropiedadesToolStripMenuItem;
+        private ToolStripMenuItem categoriasToolStripMenuItem1;
+        private ToolStripMenuItem tamañosToolStripMenuItem1;
+        private ToolStripMenuItem coloresToolStripMenuItem1;
     }
 }
