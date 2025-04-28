@@ -92,7 +92,7 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("DiscountAmount")
+                    b.Property<decimal>("DiscountRate")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("LastModificationDate")

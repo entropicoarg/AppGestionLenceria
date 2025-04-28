@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Services.Services;
+using Services.Utils;
 
 namespace AppGestionLenceria
 {
@@ -134,66 +135,146 @@ namespace AppGestionLenceria
             try
             {
                 // Create product object from form data
-                var product = new Product
-                {
-                    Name = txtName.Text,
-                    Quantity = (int)numQuantity.Value,
-                    Cost = numCost.Value,
-                    DiscountAmount = numDiscount.Value,
-                    RoundedPrice = Math.Ceiling(numCost.Value + numDiscount.Value), // Example price rounding
-                    SKU = txtSKU.Text,
-                    SupplierId = (int)cmbSupplier.SelectedValue,
-                    SizeId = (int)cmbSize.SelectedValue
-                };
+                //var product = new Product
+                //{
+                //    Name = txtName.Text,
+                //    Quantity = (int)numQuantity.Value,
+                //    Cost = numCost.Value,
+                //    DiscountRate = numDiscount.Value,
+                //    RoundedPrice = numRoundedPrice.Value, // Example price rounding
+                //    SKU = txtSKU.Text,
+                //    SupplierId = (int)cmbSupplier.SelectedValue,
+                //    SizeId = (int)cmbSize.SelectedValue
+                //};
 
-                // Update or create
-                if (selectedProductId.HasValue)
+                bool isUpdating = selectedProductId.HasValue;
+
+                if (isUpdating)
                 {
-                    product.Id = selectedProductId.Value;
-                    await _productService.UpdateAsync(product);
+                    int productId = selectedProductId.Value;
+                    var product = await _productService.GetWithAllRelationsAsync(productId);
+                    product.Name = txtName.Text;
+                    product.Quantity = (int)numQuantity.Value;
+                    product.Cost = numCost.Value;
+                    product.DiscountRate = numDiscount.Value;
+                    product.RoundedPrice = numRoundedPrice.Value;
+                    product.SKU = txtSKU.Text.ToUpper();
+                    product.SupplierId = (int)cmbSupplier.SelectedValue;
+                    product.SizeId = (int)cmbSize.SelectedValue;
+                    product.OrderNumber = txtOrderNumber.Text;
+                    product.Profitability = numProfitability.Value;
+                    // Handle many-to-many relationships for colors
+                    // First clear existing associations
+                    foreach (var color in (IEnumerable<Domain.Entities.Color>?)await _productService.GetProductColorsAsync(product.Id))
+                    {
+                        await _colorService.RemoveProductColorAsync(product.Id, color.Id);
+                    }
+
+                    // Add new associations
+                    for (int i = 0; i < clbColors.CheckedItems.Count; i++)
+                    {
+                        var color = (Domain.Entities.Color)clbColors.CheckedItems[i];
+                        await _colorService.AddProductColorAsync(product.Id, color.Id);
+                    }
+
+                    // Handle many-to-many relationships for categories
+                    // First clear existing associations
+
+                    foreach (var category in (IEnumerable<Category>?)await _productService.GetProductCategoriesAsync(product.Id))
+                    {
+                        await _categoryService.RemoveProductCategoryAsync(product.Id, category.Id);
+                    }
+
+                    // Add new associations
+                    for (int i = 0; i < clbCategories.CheckedItems.Count; i++)
+                    {
+                        var category = (Category)clbCategories.CheckedItems[i];
+                        await _categoryService.AddProductCategoryAsync(product.Id, category.Id);
+                    }
                 }
                 else
                 {
+                    //Create product object from form data
+                    var product = new Product
+                    {
+                        Name = txtName.Text,
+                        Quantity = (int)numQuantity.Value,
+                        Cost = numCost.Value,
+                        DiscountRate = numDiscount.Value,
+                        RoundedPrice = numRoundedPrice.Value, // Example price rounding
+                        SKU = txtSKU.Text,
+                        SupplierId = (int)cmbSupplier.SelectedValue,
+                        SizeId = (int)cmbSize.SelectedValue,
+                        OrderNumber = txtOrderNumber.Text,
+                        Profitability = numProfitability.Value
+                    };
+
                     product = await _productService.CreateAsync(product);
-                    //TODO need to retrieve the ID from the db since it's generated there. 
-                    selectedProductId = product.Id;
+
+                    for (int i = 0; i < clbColors.CheckedItems.Count; i++)
+                    {
+                        var color = (Domain.Entities.Color)clbColors.CheckedItems[i];
+                        await _colorService.AddProductColorAsync(product.Id, color.Id);
+                    }
+
+                    for (int i = 0; i < clbCategories.CheckedItems.Count; i++)
+                    {
+                        var category = (Category)clbCategories.CheckedItems[i];
+                        await _categoryService.AddProductCategoryAsync(product.Id, category.Id);
+                    }
+
+                    MessageBox.Show("Product saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    await LoadData();
                 }
+
+                // Update or create
+                //if (selectedProductId.HasValue)
+                //{
+                //    product.Id = selectedProductId.Value;
+                //    await _productService.UpdateAsync(product);
+                //}
+                //else
+                //{
+                //product = await _productService.CreateAsync(product);
+                //    //TODO need to retrieve the ID from the db since it's generated there. 
+                //    selectedProductId = product.Id;
+                //}
 
                 // Handle many-to-many relationships for colors
                 // First clear existing associations
-                var currentColors = await _productService.GetProductColorsAsync(product.Id);
-                foreach (var color in currentColors)
-                {
-                    await _colorService.RemoveProductColorAsync(product.Id, color.Id);
-                }
+                //var currentColors = await _productService.GetProductColorsAsync(product.Id);
+                //foreach (var color in currentColors)
+                //{
+                //    await _colorService.RemoveProductColorAsync(product.Id, color.Id);
+                //}
 
-                // Add new associations
-                for (int i = 0; i < clbColors.CheckedItems.Count; i++)
-                {
-                    var color = (Domain.Entities.Color)clbColors.CheckedItems[i];
-                    await _colorService.AddProductColorAsync(product.Id, color.Id);
-                }
+                //// Add new associations
+                //for (int i = 0; i < clbColors.CheckedItems.Count; i++)
+                //{
+                //    var color = (Domain.Entities.Color)clbColors.CheckedItems[i];
+                //    await _colorService.AddProductColorAsync(product.Id, color.Id);
+                //}
 
-                // Handle many-to-many relationships for categories
-                // First clear existing associations
-                var currentCategories = await _productService.GetProductCategoriesAsync(product.Id);
-                foreach (var category in currentCategories)
-                {
-                    await _categoryService.RemoveProductCategoryAsync(product.Id, category.Id);
-                }
+                //// Handle many-to-many relationships for categories
+                //// First clear existing associations
+                //var currentCategories = await _productService.GetProductCategoriesAsync(product.Id);
+                //foreach (var category in currentCategories)
+                //{
+                //    await _categoryService.RemoveProductCategoryAsync(product.Id, category.Id);
+                //}
 
-                // Add new associations
-                for (int i = 0; i < clbCategories.CheckedItems.Count; i++)
-                {
-                    var category = (Category)clbCategories.CheckedItems[i];
-                    await _categoryService.AddProductCategoryAsync(product.Id, category.Id);
-                }
+                //// Add new associations
+                //for (int i = 0; i < clbCategories.CheckedItems.Count; i++)
+                //{
+                //    var category = (Category)clbCategories.CheckedItems[i];
+                //    await _categoryService.AddProductCategoryAsync(product.Id, category.Id);
+                //}
 
-                MessageBox.Show("Product saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Product saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Reload data
-                await LoadData();
-                selectedProductId = _products.FirstOrDefault(s => s.Name == product.Name).Id;
+                //// Reload data
+                //await LoadData();
+                //selectedProductId = _products.FirstOrDefault(s => s.Name == product.Name).Id;
             }
             catch (Exception ex)
             {
@@ -215,8 +296,12 @@ namespace AppGestionLenceria
                 txtName.Text = product.Name;
                 numQuantity.Value = product.Quantity;
                 numCost.Value = product.Cost;
-                numDiscount.Value = product.DiscountAmount;
+                numDiscount.Value = product.DiscountRate;
                 txtSKU.Text = product.SKU;
+                txtOrderNumber.Text = product.OrderNumber;
+                numCalculatedPrice.Value = product.CalculatedPrice;
+                numProfitability.Value = product.Profitability;
+                numRoundedPrice.Value = product.RoundedPrice;
 
                 // Select supplier and size
                 cmbSupplier.SelectedValue = product.SupplierId;
@@ -242,9 +327,123 @@ namespace AppGestionLenceria
             }
         }
 
+        private void numCost_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.CostValidator(numCost.Value, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(numCost, errorMessage);
+            }
+
+
+        }
+
+        private void numCost_Validated(object sender, EventArgs e)
+        {
+            SetErrorProvider(numCost);
+        }
+
+        private void txtSKU_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.SKUValidator(txtSKU.Text.ToUpper(), out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(txtSKU, errorMessage);
+            }
+        }
+
+        private void numRoundedPrice_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.CostValidator(numRoundedPrice.Value, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(numRoundedPrice, errorMessage);
+            }
+        }
+
+        private void txtSKU_Validated(object sender, EventArgs e)
+        {
+            errorProviderProduct.SetError(txtSKU, "");
+        }
+
+        private void numRoundedPrice_Validated(object sender, EventArgs e)
+        {
+            errorProviderProduct.SetError(numRoundedPrice, "");
+        }
+
+        private void numDiscount_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.RatesValidator(numDiscount.Value, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(numDiscount, errorMessage);
+            }
+        }
+
+        private void numDiscount_Validated(object sender, EventArgs e)
+        {
+            SetErrorProvider(numDiscount);
+        }
+
+        private void numProfitability_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.RatesValidator(numProfitability.Value, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(numProfitability, errorMessage);
+            }
+        }
+
+        private void numProfitability_Validated(object sender, EventArgs e)
+        {
+            SetErrorProvider(numProfitability);
+        }
+
         protected T GetService<T>() where T : class
         {
             return ServiceProvider.GetService<T>();
+        }
+
+        private void SetErrorProvider(NumericUpDown num)
+        {
+            numCalculatedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
+            numRoundedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
+            errorProviderProduct.SetError(num, "");
+        }
+
+        private void txtName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.NamesValidator(txtName.Text, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(txtName, errorMessage);
+            }
+        }
+
+        private void txtOrderNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.OrderValidator(txtOrderNumber.Text, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(txtOrderNumber, errorMessage);
+            }
+        }
+
+        private void txtName_Validated(object sender, EventArgs e)
+        {
+            errorProviderProduct.SetError(txtName, "");
+        }
+
+        private void txtOrderNumber_Validated(object sender, EventArgs e)
+        {
+            errorProviderProduct.SetError(txtOrderNumber, "");
         }
     }
 }

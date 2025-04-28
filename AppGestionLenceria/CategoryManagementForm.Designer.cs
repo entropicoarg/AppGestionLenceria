@@ -110,7 +110,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "CategoryManagementForm";
             Text = "Gestion de categorias";
-            WindowState = FormWindowState.Maximized;
+            
             Load += CategoryManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCategories).EndInit();
             ResumeLayout(false);

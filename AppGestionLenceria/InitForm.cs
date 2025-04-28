@@ -21,6 +21,29 @@ namespace UI
             InitializeComponent();
         }
 
+        private void CloseAllChildForms()
+        {
+            // Create a copy of the MdiChildren collection to avoid collection modification issues
+            Form[] childForms = this.MdiChildren.ToArray();
+
+            // Close all open child forms
+            foreach (Form childForm in childForms)
+            {
+                childForm.Close();
+            }
+        }
+
+        private void OpenChildForm<T>(T form) where T : Form
+        {
+            // Close all existing child forms
+            CloseAllChildForms();
+
+            // Set MDI parent and show the new form
+            form.MdiParent = this;
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
         protected T GetService<T>() where T : class
         {
             return ServiceProvider.GetService<T>();
@@ -28,37 +51,27 @@ namespace UI
 
         private void gestionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SupplierManagementForm supplierForm = new SupplierManagementForm(ServiceProvider);
-            supplierForm.MdiParent = this;
-            supplierForm.Show();
+            OpenChildForm(new SupplierManagementForm(ServiceProvider));            
         }
 
         private void categoriasToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            CategoryManagementForm categoryManagementForm = new CategoryManagementForm(ServiceProvider);
-            categoryManagementForm.MdiParent = this;
-            categoryManagementForm.Show();
+            OpenChildForm(new CategoryManagementForm(ServiceProvider));            
         }
 
         private void tamañosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            SizeManagementForm sizeManagementForm = new SizeManagementForm(ServiceProvider);
-            sizeManagementForm.MdiParent = this;
-            sizeManagementForm.Show();
+            OpenChildForm(new SizeManagementForm(ServiceProvider));            
         }
 
         private void coloresToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ColorManagementForm colorManagementForm = new ColorManagementForm(ServiceProvider);
-            colorManagementForm.MdiParent = this;
-            colorManagementForm.Show();
+            OpenChildForm(new ColorManagementForm(ServiceProvider));            
         }
 
         private void gestionToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ProductManagementForm productManagementForm = new ProductManagementForm(ServiceProvider);
-            productManagementForm.MdiParent = this;
-            productManagementForm.Show();
+            OpenChildForm(new ProductManagementForm(ServiceProvider));            
         }
     }
 }

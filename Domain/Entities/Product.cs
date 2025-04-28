@@ -15,10 +15,10 @@ namespace Domain.Entities
         public DateTime LastModificationDate { get; set; }
         public int Quantity { get; set; }
         public decimal Cost { get; set; }
-        public decimal DiscountAmount { get; set; }
+        public decimal DiscountRate { get; set; }
 
         // Calculated property
-        public decimal CalculatedPrice => Cost * DiscountAmount;
+        public decimal CalculatedPrice => (Cost * Profitability) * DiscountRate;
         public decimal RoundedPrice { get; set; }
         public string SKU { get; set; }
         public decimal Profitability { get; set; }

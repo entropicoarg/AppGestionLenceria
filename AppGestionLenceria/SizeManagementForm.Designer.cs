@@ -109,8 +109,7 @@
             Controls.Add(dgvSizes);
             FormBorderStyle = FormBorderStyle.None;
             Name = "SizeManagementForm";
-            Text = "Gestion de tamaños";
-            WindowState = FormWindowState.Maximized;
+            Text = "Gestion de tamaños";            
             Load += SizeManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvSizes).EndInit();
             ResumeLayout(false);

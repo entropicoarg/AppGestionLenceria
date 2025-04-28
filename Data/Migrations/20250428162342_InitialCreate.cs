@@ -117,7 +117,7 @@ namespace Data.Migrations
                     LastModificationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DiscountRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RoundedPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SKU = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Profitability = table.Column<decimal>(type: "decimal(18,2)", nullable: false),

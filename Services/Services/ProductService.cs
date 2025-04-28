@@ -62,10 +62,26 @@ namespace Services.Services
             if (existingProduct == null)
                 throw new KeyNotFoundException($"Product with ID {product.Id} not found.");
 
-            // Preserve creation date
-            product.CreationDate = existingProduct.CreationDate;
+            existingProduct.Name = product.Name;
+            existingProduct.OrderNumber = product.OrderNumber;
+            existingProduct.Supplier = product.Supplier;
+            existingProduct.SupplierId = product.SupplierId;
+            existingProduct.Size = product.Size;
+            existingProduct.SizeId = product.SizeId;
+            existingProduct.Cost = product.Cost;
+            existingProduct.DiscountRate = product.DiscountRate;
+            existingProduct.ProductCategories = product.ProductCategories;
+            existingProduct.SKU = product.SKU;
+            existingProduct.Quantity = product.Quantity;
+            existingProduct.Profitability = product.Profitability;
+            existingProduct.ProductColors = product.ProductColors;
+            existingProduct.RoundedPrice = product.RoundedPrice;
+            existingProduct.LastModificationDate = DateTime.Now;
 
-            _unitOfWork.Products.Update(product);
+
+
+
+            _unitOfWork.Products.Update(existingProduct);
             await _unitOfWork.CompleteAsync();
         }
 

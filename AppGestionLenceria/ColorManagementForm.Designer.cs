@@ -109,8 +109,7 @@
             Controls.Add(dgvColors);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ColorManagementForm";
-            Text = "Gestion de colores";
-            WindowState = FormWindowState.Maximized;
+            Text = "Gestion de colores";           
             Load += ColorManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvColors).EndInit();
             ResumeLayout(false);

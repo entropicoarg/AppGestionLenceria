@@ -102,7 +102,7 @@ namespace Data.Context
                 entity.Property(e => e.CreationDate).IsRequired();
                 entity.Property(e => e.LastModificationDate).IsRequired();
                 entity.Property(e => e.Cost).HasColumnType("decimal(18,2)");
-                entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18,2)");
+                entity.Property(e => e.DiscountRate).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.RoundedPrice).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.Profitability).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.SKU).HasMaxLength(50);

@@ -73,6 +73,7 @@ namespace AppGestionLenceria
 
                 if (isUpdating)
                 {
+
                     int supplierId = selectedSupplierId.Value;
                     var supplier = await _supplierService.GetByIdAsync(supplierId);
                     supplier.Name = txtName.Text;

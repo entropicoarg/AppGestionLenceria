@@ -109,8 +109,7 @@
             Controls.Add(dgvSuppliers);
             FormBorderStyle = FormBorderStyle.None;
             Name = "SupplierManagementForm";
-            Text = "Gestion de proveedores";
-            WindowState = FormWindowState.Maximized;
+            Text = "Gestion de proveedores";            
             Load += SupplierManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvSuppliers).EndInit();
             ResumeLayout(false);

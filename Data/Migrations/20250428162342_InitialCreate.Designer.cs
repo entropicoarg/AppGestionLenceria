@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(LingerieDbContext))]
-    [Migration("20250422144014_AddAutoIncrementIds")]
-    partial class AddAutoIncrementIds
+    [Migration("20250428162342_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,7 +95,7 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("DiscountAmount")
+                    b.Property<decimal>("DiscountRate")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("LastModificationDate")
