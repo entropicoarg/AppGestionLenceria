@@ -17,5 +17,6 @@ namespace Data.Repositories
         Task AddProductCategoryAsync(int productId, int categoryId);
         Task RemoveProductColorAsync(int productId, int colorId);
         Task RemoveProductCategoryAsync(int productId, int categoryId);
+        Task<IEnumerable<Product>> GetAllWithRelationsAsync();
     }
 }

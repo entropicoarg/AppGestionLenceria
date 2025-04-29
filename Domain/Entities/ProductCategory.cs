@@ -14,5 +14,10 @@ namespace Domain.Entities
         // Navigation properties
         public virtual Product Product { get; set; }
         public virtual Category Category { get; set; }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

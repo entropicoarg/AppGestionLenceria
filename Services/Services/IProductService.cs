@@ -10,6 +10,7 @@ namespace Services.Services
     public interface IProductService
     {
         Task<IEnumerable<Product>> GetAllAsync();
+        Task<IEnumerable<Product>> GetAllWithRelationsAsync();
         Task<Product> GetByIdAsync(int id);
         Task<Product> GetWithAllRelationsAsync(int id);
         Task<IEnumerable<Product>> GetBySupplierAsync(int supplierId);

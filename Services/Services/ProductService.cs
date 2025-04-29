@@ -22,6 +22,11 @@ namespace Services.Services
             return await _unitOfWork.Products.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Product>> GetAllWithRelationsAsync()
+        {
+            return await _unitOfWork.Products.GetAllWithRelationsAsync();
+        }
+
         public async Task<Product> GetByIdAsync(int id)
         {
             return await _unitOfWork.Products.GetByIdAsync(id);

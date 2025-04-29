@@ -3,6 +3,8 @@ using Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Services.Services;
 using Services.Utils;
+using System.Data;
+using Zuby.ADGV;
 
 namespace AppGestionLenceria
 {
@@ -18,6 +20,9 @@ namespace AppGestionLenceria
 
         private int? selectedProductId = null;
         private IEnumerable<Product> _products = Enumerable.Empty<Product>();
+        private DataTable _productsDataTable;
+        private BindingSource _bindingSource = new BindingSource();
+
 
         public ProductManagementForm(IServiceProvider serviceProvider)
         {
@@ -31,11 +36,82 @@ namespace AppGestionLenceria
             InitializeComponent();
         }
 
+        private async Task<DataTable> ConvertProductsToDataTableWithRelationsAsync(IEnumerable<Product> products)
+        {
+
+            var productsDataTable = new DataTable();
+            // Add columns
+            productsDataTable.Columns.Add("Id", typeof(int));
+            productsDataTable.Columns.Add("Nombre", typeof(string));
+            productsDataTable.Columns.Add("Cantidad", typeof(int));
+            productsDataTable.Columns.Add("Costo", typeof(decimal));
+            productsDataTable.Columns.Add("TasaDescuento", typeof(decimal));
+            productsDataTable.Columns.Add("PrecioCalculado", typeof(decimal));
+            productsDataTable.Columns.Add("PrecioRedondeado", typeof(decimal));
+            productsDataTable.Columns.Add("SKU", typeof(string));
+            productsDataTable.Columns.Add("Rentabilidad", typeof(decimal));
+            productsDataTable.Columns.Add("Orden", typeof(string));
+            productsDataTable.Columns.Add("Proveedor", typeof(string));  // Supplier name
+            productsDataTable.Columns.Add("Talla", typeof(string));      // Size name
+            productsDataTable.Columns.Add("Colores", typeof(string));    // Color names
+            productsDataTable.Columns.Add("Categorias", typeof(string)); // Category names
+
+            // Add rows for each product
+            foreach (var product in _products)
+            {
+                var row = productsDataTable.NewRow();
+                row["Id"] = product.Id;
+                row["Nombre"] = product.Name;
+                row["Cantidad"] = product.Quantity;
+                row["Costo"] = product.Cost;
+                row["TasaDescuento"] = product.DiscountRate;
+                row["PrecioCalculado"] = product.CalculatedPrice;
+                row["PrecioRedondeado"] = product.RoundedPrice;
+                row["SKU"] = product.SKU ?? string.Empty;
+                row["Rentabilidad"] = product.Profitability;
+                row["Orden"] = product.OrderNumber ?? string.Empty;
+
+                // Add supplier and size information
+                row["Proveedor"] = product.Supplier?.Name ?? string.Empty;
+                row["Talla"] = product.Size?.Name ?? string.Empty;
+
+                // Add comma-separated lists of color and category names
+                row["Colores"] = string.Join(", ", product.ProductColors.Select(pc => pc.Color.Name));
+                row["Categorias"] = string.Join(", ", product.ProductCategories.Select(pc => pc.Category.Name));
+
+                productsDataTable.Rows.Add(row);
+            }
+
+
+            return productsDataTable;
+        }
+
         private async Task LoadData()
         {
             // Load products for the grid
-            _products = await _productService.GetAllAsync();
-            dgvProducts.DataSource = _products.ToList();
+            _products = await _productService.GetAllWithRelationsAsync();
+            //var formattedList = (from a in _products 
+            //                     select new 
+            //                     {
+            //                         Nombre = a.Name,
+            //                         Cantidad = a.Quantity,
+            //                         Costo = a.Cost,
+            //                         TasaDescuento = a.DiscountRate,
+            //                         PrecioCalculado = a.CalculatedPrice,
+            //                         PrecioRedondeado = a.RoundedPrice,
+            //                         CodigoSKU = a.SKU,
+            //                         Rentabilidad = a.Profitability,
+            //                         Orden = a.OrderNumber,
+            //                         Colores = string.Join(", ", a.ProductColors.Select(pc => pc.Color.Name)),
+            //                         Categorias = string.Join(", ", a.ProductCategories.Select(pc => pc.Category.Name))
+            //                     }).ToList();
+
+            _productsDataTable = await ConvertProductsToDataTableWithRelationsAsync(_products);
+
+            _bindingSource.DataSource = _productsDataTable;
+
+
+            dgvProducts.DataSource = _bindingSource;
 
             // Load suppliers for dropdown
             var suppliers = await _supplierService.GetAllAsync();
@@ -76,8 +152,12 @@ namespace AppGestionLenceria
             txtName.Text = string.Empty;
             numQuantity.Value = 0;
             numCost.Value = 0;
-            numDiscount.Value = 0;
+            numDiscount.Value = 1;
+            numProfitability.Value = 1;
+            numRoundedPrice.Value = 0;
+            numCalculatedPrice.Value = 0;
             txtSKU.Text = string.Empty;
+            txtOrderNumber.Text = string.Empty;
 
             // Clear selections
             if (cmbSupplier.Items.Count > 0) cmbSupplier.SelectedIndex = 0;
@@ -222,9 +302,6 @@ namespace AppGestionLenceria
                         var category = (Category)clbCategories.CheckedItems[i];
                         await _categoryService.AddProductCategoryAsync(product.Id, category.Id);
                     }
-
-                    MessageBox.Show("Product saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    await LoadData();
                 }
 
                 // Update or create
@@ -270,11 +347,13 @@ namespace AppGestionLenceria
                 //    await _categoryService.AddProductCategoryAsync(product.Id, category.Id);
                 //}
 
-                //MessageBox.Show("Product saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 
                 //// Reload data
                 //await LoadData();
                 //selectedProductId = _products.FirstOrDefault(s => s.Name == product.Name).Id;
+                MessageBox.Show("Product saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                await LoadData();
             }
             catch (Exception ex)
             {
@@ -282,50 +361,7 @@ namespace AppGestionLenceria
             }
         }
 
-        private async void dgvProducts_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvProducts.SelectedRows.Count > 0)
-            {
-                // Get selected product ID
-                selectedProductId = (int)dgvProducts.SelectedRows[0].Cells["Id"].Value;
 
-                // Load product with all relations
-                var product = await _productService.GetWithAllRelationsAsync(selectedProductId.Value);
-
-                // Fill form fields
-                txtName.Text = product.Name;
-                numQuantity.Value = product.Quantity;
-                numCost.Value = product.Cost;
-                numDiscount.Value = product.DiscountRate;
-                txtSKU.Text = product.SKU;
-                txtOrderNumber.Text = product.OrderNumber;
-                numCalculatedPrice.Value = product.CalculatedPrice;
-                numProfitability.Value = product.Profitability;
-                numRoundedPrice.Value = product.RoundedPrice;
-
-                // Select supplier and size
-                cmbSupplier.SelectedValue = product.SupplierId;
-                cmbSize.SelectedValue = product.SizeId;
-
-                // Check colors
-                var productColors = await _productService.GetProductColorsAsync(selectedProductId.Value);
-                for (int i = 0; i < clbColors.Items.Count; i++)
-                {
-                    var color = (Domain.Entities.Color)clbColors.Items[i];
-                    bool isSelected = productColors.Any(c => c.Id == color.Id);
-                    clbColors.SetItemChecked(i, isSelected);
-                }
-
-                // Check categories
-                var productCategories = await _productService.GetProductCategoriesAsync(selectedProductId.Value);
-                for (int i = 0; i < clbCategories.Items.Count; i++)
-                {
-                    var category = (Category)clbCategories.Items[i];
-                    bool isSelected = productCategories.Any(c => c.Id == category.Id);
-                    clbCategories.SetItemChecked(i, isSelected);
-                }
-            }
-        }
 
         private void numCost_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -444,6 +480,110 @@ namespace AppGestionLenceria
         private void txtOrderNumber_Validated(object sender, EventArgs e)
         {
             errorProviderProduct.SetError(txtOrderNumber, "");
+        }
+
+
+        private void dgvProducts_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        {
+
+        }
+
+        private void dgvProducts_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
+        {
+
+        }
+
+        private async void dgvProducts_SelectionChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvProducts.SelectedRows.Count > 0)
+                {
+                    if (dgvProducts.SelectedRows[0].Cells["Id"].Value is DBNull) throw new NullReferenceException();
+                    // Get selected product ID
+                    selectedProductId = (int)dgvProducts.SelectedRows[0].Cells["Id"].Value;
+
+                    // Load product with all relations
+                    var product = await _productService.GetWithAllRelationsAsync(selectedProductId.Value);
+
+                    // Fill form fields
+                    txtName.Text = product.Name;
+                    numQuantity.Value = product.Quantity;
+                    numCost.Value = product.Cost;
+                    numDiscount.Value = product.DiscountRate;
+                    txtSKU.Text = product.SKU;
+                    txtOrderNumber.Text = product.OrderNumber;
+                    numCalculatedPrice.Value = product.CalculatedPrice;
+                    numProfitability.Value = product.Profitability;
+                    numRoundedPrice.Value = product.RoundedPrice;
+
+                    // Select supplier and size
+                    cmbSupplier.SelectedValue = product.SupplierId;
+                    cmbSize.SelectedValue = product.SizeId;
+
+                    // Check colors
+                    var productColors = await _productService.GetProductColorsAsync(selectedProductId.Value);
+                    for (int i = 0; i < clbColors.Items.Count; i++)
+                    {
+                        var color = (Domain.Entities.Color)clbColors.Items[i];
+                        bool isSelected = productColors.Any(c => c.Id == color.Id);
+                        clbColors.SetItemChecked(i, isSelected);
+                    }
+
+                    // Check categories
+                    var productCategories = await _productService.GetProductCategoriesAsync(selectedProductId.Value);
+                    for (int i = 0; i < clbCategories.Items.Count; i++)
+                    {
+                        var category = (Category)clbCategories.Items[i];
+                        bool isSelected = productCategories.Any(c => c.Id == category.Id);
+                        clbCategories.SetItemChecked(i, isSelected);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error selecting product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void advancedDataGridViewSearchToolBar1_Search(object sender, AdvancedDataGridViewSearchToolBarSearchEventArgs e)
+        {
+            bool restartsearch = true;
+            int startColumn = 0;
+            int startRow = 0;
+            if (!e.FromBegin)
+            {
+                bool endcol = dgvProducts.CurrentCell.ColumnIndex + 1 >= dgvProducts.ColumnCount;
+                bool endrow = dgvProducts.CurrentCell.RowIndex + 1 >= dgvProducts.RowCount;
+
+                if (endcol && endrow)
+                {
+                    startColumn = dgvProducts.CurrentCell.ColumnIndex;
+                    startRow = dgvProducts.CurrentCell.RowIndex;
+                }
+                else
+                {
+                    startColumn = endcol ? 0 : dgvProducts.CurrentCell.ColumnIndex + 1;
+                    startRow = dgvProducts.CurrentCell.RowIndex + (endcol ? 1 : 0);
+                }
+            }
+            DataGridViewCell c = dgvProducts.FindCell(
+                e.ValueToSearch,
+                e.ColumnToSearch != null ? e.ColumnToSearch.Name : null,
+                startRow,
+                startColumn,
+                e.WholeWord,
+                e.CaseSensitive);
+            if (c == null && restartsearch)
+                c = dgvProducts.FindCell(
+                    e.ValueToSearch,
+                    e.ColumnToSearch != null ? e.ColumnToSearch.Name : null,
+                    0,
+                    0,
+                    e.WholeWord,
+                    e.CaseSensitive);
+            if (c != null)
+                dgvProducts.CurrentCell = c;
         }
     }
 }

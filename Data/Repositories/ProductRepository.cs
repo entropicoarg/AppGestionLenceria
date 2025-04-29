@@ -22,6 +22,18 @@ namespace Data.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Product>> GetAllWithRelationsAsync()
+        {
+            return await _context.Products
+                .Include(p => p.Supplier)    
+                .Include(p => p.Size)
+                .Include(p => p.ProductColors)
+                    .ThenInclude(pc => pc.Color)
+                .Include(p => p.ProductCategories)
+                    .ThenInclude(pc => pc.Category)
+                .ToListAsync();
+        }
+
         public async Task<Product> GetWithAllRelationsAsync(int id)
         {
             return await _context.Products
