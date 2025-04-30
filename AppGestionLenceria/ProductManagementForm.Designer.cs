@@ -378,6 +378,7 @@ namespace AppGestionLenceria
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             ClientSize = new Size(1121, 774);
             Controls.Add(advancedDataGridViewSearchToolBar1);
             Controls.Add(dgvProducts);
@@ -410,7 +411,6 @@ namespace AppGestionLenceria
             Controls.Add(numQuantity);
             Controls.Add(txtSKU);
             Controls.Add(txtName);
-            FormBorderStyle = FormBorderStyle.None;
             Name = "ProductManagementForm";
             Text = "Gestion de productos";
             Load += ProductManagementForm_Load;

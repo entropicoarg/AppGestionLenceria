@@ -22,5 +22,10 @@ namespace Domain.Entities
         // Navigation properties
         public virtual Customer Customer { get; set; }
         public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
+
+        public void CalculateTotalPrice()
+        {
+            TotalPrice = SaleDetails.Sum(s => s.Subtotal);
+        }
     }
 }

@@ -88,23 +88,8 @@ namespace AppGestionLenceria
 
         private async Task LoadData()
         {
-            // Load products for the grid
-            _products = await _productService.GetAllWithRelationsAsync();
-            //var formattedList = (from a in _products 
-            //                     select new 
-            //                     {
-            //                         Nombre = a.Name,
-            //                         Cantidad = a.Quantity,
-            //                         Costo = a.Cost,
-            //                         TasaDescuento = a.DiscountRate,
-            //                         PrecioCalculado = a.CalculatedPrice,
-            //                         PrecioRedondeado = a.RoundedPrice,
-            //                         CodigoSKU = a.SKU,
-            //                         Rentabilidad = a.Profitability,
-            //                         Orden = a.OrderNumber,
-            //                         Colores = string.Join(", ", a.ProductColors.Select(pc => pc.Color.Name)),
-            //                         Categorias = string.Join(", ", a.ProductCategories.Select(pc => pc.Category.Name))
-            //                     }).ToList();
+            
+            _products = await _productService.GetAllWithRelationsAsync();           
 
             _productsDataTable = await ConvertProductsToDataTableWithRelationsAsync(_products);
 
