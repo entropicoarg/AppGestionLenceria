@@ -39,12 +39,14 @@
             categoriasToolStripMenuItem1 = new ToolStripMenuItem();
             tamañosToolStripMenuItem1 = new ToolStripMenuItem();
             coloresToolStripMenuItem1 = new ToolStripMenuItem();
+            clientesToolStripMenuItem = new ToolStripMenuItem();
+            gestionToolStripMenuItem2 = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, proveedoresToolStripMenuItem, productosToolStripMenuItem, ventasToolStripMenuItem, gestionDePropiedadesToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, proveedoresToolStripMenuItem, productosToolStripMenuItem, ventasToolStripMenuItem, gestionDePropiedadesToolStripMenuItem, clientesToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
@@ -119,6 +121,20 @@
             coloresToolStripMenuItem1.Text = "Colores";
             coloresToolStripMenuItem1.Click += coloresToolStripMenuItem1_Click;
             // 
+            // clientesToolStripMenuItem
+            // 
+            clientesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionToolStripMenuItem2 });
+            clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
+            clientesToolStripMenuItem.Size = new Size(61, 20);
+            clientesToolStripMenuItem.Text = "Clientes";
+            // 
+            // gestionToolStripMenuItem2
+            // 
+            gestionToolStripMenuItem2.Name = "gestionToolStripMenuItem2";
+            gestionToolStripMenuItem2.Size = new Size(180, 22);
+            gestionToolStripMenuItem2.Text = "Gestion";
+            gestionToolStripMenuItem2.Click += gestionToolStripMenuItem2_Click;
+            // 
             // InitForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -148,5 +164,7 @@
         private ToolStripMenuItem categoriasToolStripMenuItem1;
         private ToolStripMenuItem tamañosToolStripMenuItem1;
         private ToolStripMenuItem coloresToolStripMenuItem1;
+        private ToolStripMenuItem clientesToolStripMenuItem;
+        private ToolStripMenuItem gestionToolStripMenuItem2;
     }
 }

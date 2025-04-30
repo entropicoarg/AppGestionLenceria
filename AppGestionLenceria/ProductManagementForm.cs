@@ -199,19 +199,6 @@ namespace AppGestionLenceria
         {
             try
             {
-                // Create product object from form data
-                //var product = new Product
-                //{
-                //    Name = txtName.Text,
-                //    Quantity = (int)numQuantity.Value,
-                //    Cost = numCost.Value,
-                //    DiscountRate = numDiscount.Value,
-                //    RoundedPrice = numRoundedPrice.Value, // Example price rounding
-                //    SKU = txtSKU.Text,
-                //    SupplierId = (int)cmbSupplier.SelectedValue,
-                //    SizeId = (int)cmbSize.SelectedValue
-                //};
-
                 bool isUpdating = selectedProductId.HasValue;
 
                 if (isUpdating)
@@ -266,7 +253,7 @@ namespace AppGestionLenceria
                         Quantity = (int)numQuantity.Value,
                         Cost = numCost.Value,
                         DiscountRate = numDiscount.Value,
-                        RoundedPrice = numRoundedPrice.Value, // Example price rounding
+                        RoundedPrice = numRoundedPrice.Value, 
                         SKU = txtSKU.Text,
                         SupplierId = (int)cmbSupplier.SelectedValue,
                         SizeId = (int)cmbSize.SelectedValue,
@@ -287,56 +274,7 @@ namespace AppGestionLenceria
                         var category = (Category)clbCategories.CheckedItems[i];
                         await _categoryService.AddProductCategoryAsync(product.Id, category.Id);
                     }
-                }
-
-                // Update or create
-                //if (selectedProductId.HasValue)
-                //{
-                //    product.Id = selectedProductId.Value;
-                //    await _productService.UpdateAsync(product);
-                //}
-                //else
-                //{
-                //product = await _productService.CreateAsync(product);
-                //    //TODO need to retrieve the ID from the db since it's generated there. 
-                //    selectedProductId = product.Id;
-                //}
-
-                // Handle many-to-many relationships for colors
-                // First clear existing associations
-                //var currentColors = await _productService.GetProductColorsAsync(product.Id);
-                //foreach (var color in currentColors)
-                //{
-                //    await _colorService.RemoveProductColorAsync(product.Id, color.Id);
-                //}
-
-                //// Add new associations
-                //for (int i = 0; i < clbColors.CheckedItems.Count; i++)
-                //{
-                //    var color = (Domain.Entities.Color)clbColors.CheckedItems[i];
-                //    await _colorService.AddProductColorAsync(product.Id, color.Id);
-                //}
-
-                //// Handle many-to-many relationships for categories
-                //// First clear existing associations
-                //var currentCategories = await _productService.GetProductCategoriesAsync(product.Id);
-                //foreach (var category in currentCategories)
-                //{
-                //    await _categoryService.RemoveProductCategoryAsync(product.Id, category.Id);
-                //}
-
-                //// Add new associations
-                //for (int i = 0; i < clbCategories.CheckedItems.Count; i++)
-                //{
-                //    var category = (Category)clbCategories.CheckedItems[i];
-                //    await _categoryService.AddProductCategoryAsync(product.Id, category.Id);
-                //}
-
-
-
-                //// Reload data
-                //await LoadData();
-                //selectedProductId = _products.FirstOrDefault(s => s.Name == product.Name).Id;
+                }                                
                 MessageBox.Show("Product saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 await LoadData();
             }

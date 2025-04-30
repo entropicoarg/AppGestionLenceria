@@ -44,9 +44,9 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Phone = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    SocialMedia = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false)
+                    Phone = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    SocialMedia = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {

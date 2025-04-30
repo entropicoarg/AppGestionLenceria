@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(LingerieDbContext))]
-    [Migration("20250428162342_InitialCreate")]
+    [Migration("20250430162857_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -59,7 +59,6 @@ namespace Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
@@ -69,12 +68,10 @@ namespace Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SocialMedia")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 

@@ -9,10 +9,10 @@ namespace Domain.Entities
     public class Customer
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string SocialMedia { get; set; }
+        public string? Name { get; set; }
+        public string? Phone { get; set; }
+        public string? Email { get; set; }
+        public string? SocialMedia { get; set; }
 
         // Navigation properties
         public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();

@@ -51,27 +51,32 @@ namespace UI
 
         private void gestionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new SupplierManagementForm(ServiceProvider));            
+            OpenChildForm(new SupplierManagementForm(ServiceProvider));
         }
 
         private void categoriasToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CategoryManagementForm(ServiceProvider));            
+            OpenChildForm(new CategoryManagementForm(ServiceProvider));
         }
 
         private void tamañosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new SizeManagementForm(ServiceProvider));            
+            OpenChildForm(new SizeManagementForm(ServiceProvider));
         }
 
         private void coloresToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new ColorManagementForm(ServiceProvider));            
+            OpenChildForm(new ColorManagementForm(ServiceProvider));
         }
 
         private void gestionToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new ProductManagementForm(ServiceProvider));            
+            OpenChildForm(new ProductManagementForm(ServiceProvider));
+        }
+
+        private void gestionToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new CustomerManagementForm(ServiceProvider));
         }
     }
 }
