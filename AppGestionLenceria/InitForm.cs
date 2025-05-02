@@ -78,5 +78,10 @@ namespace UI
         {
             OpenChildForm(new CustomerManagementForm(ServiceProvider));
         }
+
+        private void gestionToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new SalesManagementForm(ServiceProvider));
+        }
     }
 }

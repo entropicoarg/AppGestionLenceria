@@ -41,6 +41,7 @@
             coloresToolStripMenuItem1 = new ToolStripMenuItem();
             clientesToolStripMenuItem = new ToolStripMenuItem();
             gestionToolStripMenuItem2 = new ToolStripMenuItem();
+            gestionToolStripMenuItem3 = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -83,12 +84,13 @@
             // gestionToolStripMenuItem1
             // 
             gestionToolStripMenuItem1.Name = "gestionToolStripMenuItem1";
-            gestionToolStripMenuItem1.Size = new Size(180, 22);
+            gestionToolStripMenuItem1.Size = new Size(114, 22);
             gestionToolStripMenuItem1.Text = "Gestion";
             gestionToolStripMenuItem1.Click += gestionToolStripMenuItem1_Click;
             // 
             // ventasToolStripMenuItem
             // 
+            ventasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionToolStripMenuItem3 });
             ventasToolStripMenuItem.Name = "ventasToolStripMenuItem";
             ventasToolStripMenuItem.Size = new Size(53, 20);
             ventasToolStripMenuItem.Text = "Ventas";
@@ -135,6 +137,13 @@
             gestionToolStripMenuItem2.Text = "Gestion";
             gestionToolStripMenuItem2.Click += gestionToolStripMenuItem2_Click;
             // 
+            // gestionToolStripMenuItem3
+            // 
+            gestionToolStripMenuItem3.Name = "gestionToolStripMenuItem3";
+            gestionToolStripMenuItem3.Size = new Size(180, 22);
+            gestionToolStripMenuItem3.Text = "Gestion";
+            gestionToolStripMenuItem3.Click += gestionToolStripMenuItem3_Click;
+            // 
             // InitForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -166,5 +175,6 @@
         private ToolStripMenuItem coloresToolStripMenuItem1;
         private ToolStripMenuItem clientesToolStripMenuItem;
         private ToolStripMenuItem gestionToolStripMenuItem2;
+        private ToolStripMenuItem gestionToolStripMenuItem3;
     }
 }

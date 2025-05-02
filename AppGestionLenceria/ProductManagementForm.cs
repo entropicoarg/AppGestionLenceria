@@ -89,13 +89,9 @@ namespace AppGestionLenceria
         private async Task LoadData()
         {
             
-            _products = await _productService.GetAllWithRelationsAsync();           
-
+            _products = await _productService.GetAllWithRelationsAsync();   
             _productsDataTable = await ConvertProductsToDataTableWithRelationsAsync(_products);
-
             _bindingSource.DataSource = _productsDataTable;
-
-
             dgvProducts.DataSource = _bindingSource;
 
             // Load suppliers for dropdown
