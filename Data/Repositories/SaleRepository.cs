@@ -40,11 +40,7 @@ namespace Data.Repositories
 
         public override async Task AddAsync(Sale sale)
         {
-            // Set sale date if not defined
-            if (sale.SaleDate == default)
-            {
-                sale.SaleDate = DateTime.Now;
-            }
+                        
 
             await base.AddAsync(sale);
         }

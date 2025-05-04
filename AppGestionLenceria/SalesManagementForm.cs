@@ -18,12 +18,15 @@ namespace UI
     public partial class SalesManagementForm : Form
     {
         private readonly IProductService _productService;
-        private readonly ICustomerService _customerService;
+        private readonly ISaleService _saleService;
         private int? selectedProductId = null;
         private int? selectedProductSaleId = null;
         private IEnumerable<Product> _products = Enumerable.Empty<Product>();
+        private IEnumerable<Sale> _sales = Enumerable.Empty<Sale>();
         private DataTable _productsDataTable;
-        private BindingSource _bindingSource = new BindingSource();
+        private BindingSource _productsBindingSource = new BindingSource();
+        private BindingSource _selectedProductsBindingSource = new BindingSource();
+        private BindingSource _salesBindingSource = new BindingSource();
         private List<Product> _selectedProducts = new List<Product>();
 
         protected IServiceProvider ServiceProvider { get; }
@@ -31,7 +34,8 @@ namespace UI
         {
             ServiceProvider = serviceProvider;
             _productService = GetService<IProductService>();
-            _customerService = GetService<ICustomerService>();
+            _saleService = GetService<ISaleService>();
+
             InitializeComponent();
         }
         protected T GetService<T>() where T : class
@@ -117,25 +121,6 @@ namespace UI
             }
         }
 
-        private async void LoadCustomers()
-        {
-            try
-            {
-                var customers = await _customerService.GetAllAsync();
-                cmbCustomer.DataSource = customers;
-                cmbCustomer.DisplayMember = "Name";
-                cmbCustomer.ValueMember = "Id";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading customers: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void LoadPaymentMethods()
-        {
-            cmbPaymentMethods.DataSource = Enum.GetValues(typeof(PaymentMethod));
-        }
 
         private async void LoadData()
         {
@@ -143,13 +128,13 @@ namespace UI
             {
                 _products = await _productService.GetAllWithRelationsAsync();
                 _productsDataTable = await ConvertProductsToDataTableWithRelationsAsync(_products);
-                _bindingSource.DataSource = _productsDataTable;
-                dgvProducts.DataSource = _bindingSource;
-                dgvSelectedProducts.DataSource = _selectedProducts;
-
-                LoadCustomers();
-                LoadPaymentMethods();
-
+                _sales = await _saleService.GetAllAsync();
+                _productsBindingSource.DataSource = _productsDataTable;
+                dgvProducts.DataSource = _productsBindingSource;
+                _selectedProductsBindingSource.DataSource = _selectedProducts;
+                dgvSelectedProducts.DataSource = _selectedProductsBindingSource;
+                _salesBindingSource.DataSource = _sales;
+                dgvSales.DataSource = _salesBindingSource;
                 selectedProductId = null;
                 selectedProductSaleId = null;
             }
@@ -190,7 +175,7 @@ namespace UI
             }
         }
 
-        
+
 
         private async void btnAddProducts_Click(object sender, EventArgs e)
         {
@@ -244,9 +229,9 @@ namespace UI
                     if (result == DialogResult.Yes)
                     {
                         // Remove existing entry to update it
-                        
-                        _selectedProducts.FirstOrDefault(p => p.Id == existingProduct.Id).Quantity += selectedQuantity ;
-                        
+
+                        _selectedProducts.FirstOrDefault(p => p.Id == existingProduct.Id).Quantity += selectedQuantity;
+
                     }
                     else
                     {
@@ -274,7 +259,7 @@ namespace UI
 
                     // Add to selected products list
                     _selectedProducts.Add(productToAdd);
-                }                
+                }
 
                 // Update the original product quantity in the products list
                 Product originalProduct = _products.FirstOrDefault(p => p.Id == selectedProduct.Id);
@@ -301,25 +286,26 @@ namespace UI
         // Helper method to refresh the data displayed in both DataGridViews
         private void RefreshProductsDisplay()
         {
-            // Refresh the selected products grid
-            if (dgvSelectedProducts.DataSource is List<Product>)
-            {
-                // If bound directly to the list, refresh with a new binding
-                dgvSelectedProducts.DataSource = null;
-                dgvSelectedProducts.DataSource = new List<Product>(_selectedProducts);
-            }
-            else
-            {
-                // Create a binding source for selected products if needed
-                BindingSource selectedProductsBinding = new BindingSource
-                {
-                    DataSource = new List<Product>(_selectedProducts)
-                };
-                dgvSelectedProducts.DataSource = selectedProductsBinding;
-            }
-
+            //// Refresh the selected products grid
+            //if (dgvSelectedProducts.DataSource is List<Product>)
+            //{
+            //    // If bound directly to the list, refresh with a new binding
+            //    dgvSelectedProducts.DataSource = null;
+            //    dgvSelectedProducts.DataSource = new List<Product>(_selectedProducts);
+            //}
+            //else
+            //{
+            //    // Create a binding source for selected products if needed
+            //    BindingSource selectedProductsBinding = new BindingSource
+            //    {
+            //        DataSource = new List<Product>(_selectedProducts)
+            //    };
+            //    dgvSelectedProducts.DataSource = selectedProductsBinding;
+            //}
+            _selectedProductsBindingSource.ResetBindings(false);
+            _salesBindingSource.ResetBindings(false);
             // Refresh the main products grid
-            _bindingSource.ResetBindings(false);
+            _productsBindingSource.ResetBindings(false);
 
             // If there's a selected product, update its quantity combobox
             if (selectedProductId.HasValue)
@@ -342,11 +328,11 @@ namespace UI
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                                
+
 
                 Product selectedProduct = _selectedProducts.FirstOrDefault(x => x.Id == selectedProductSaleId);
 
-                
+
                 _selectedProducts.Remove(selectedProduct);
 
                 // Update the original product quantity in the products list
@@ -358,7 +344,7 @@ namespace UI
                 LoadData();
 
                 // Refresh data bindings
-                RefreshProductsDisplay();                
+                RefreshProductsDisplay();
 
                 // Show confirmation
                 MessageBox.Show($"{selectedProduct.Quantity} {selectedProduct.Name} removed from cart.",
@@ -379,13 +365,34 @@ namespace UI
                 {
                     if (dgvSelectedProducts.SelectedRows[0].Cells["Id"].Value is DBNull) throw new NullReferenceException();
                     // Get selected product ID
-                    selectedProductSaleId = (int)dgvSelectedProducts.SelectedRows[0].Cells["Id"].Value;                    
+                    selectedProductSaleId = (int)dgvSelectedProducts.SelectedRows[0].Cells["Id"].Value;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error selecting product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void CleanSelectedProducts()
+        {
+            _selectedProducts.Clear();
+        }
+
+        private void btnNewSale_Click(object sender, EventArgs e)
+        {
+            DialogResult result;
+            result = MessageBox.Show("Desea crear una nueva venta?", "Nueva venta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No) return;
+            if (result == DialogResult.Yes)
+            {
+                NewSaleForm saleForm = new NewSaleForm(_selectedProducts, ServiceProvider);
+                saleForm.ShowDialog();
+            }
+            CleanSelectedProducts();
+            LoadData();
+            RefreshProductsDisplay();
+            
         }
     }
 }

@@ -77,9 +77,11 @@ namespace Services.Services
 
                     // Get product information for price calculation
                     var product = await _unitOfWork.Products.GetByIdAsync(detail.ProductId);
-                    if (product != null)
+
+                    if (detail.Product != null)
                     {
-                        detail.UnitPrice = product.RoundedPrice;
+                        detail.UnitPrice = detail.Product.RoundedPrice;
+                        detail.Quantity = detail.Product.Quantity;
                         totalPrice += detail.Subtotal;
 
                         // Update product inventory
