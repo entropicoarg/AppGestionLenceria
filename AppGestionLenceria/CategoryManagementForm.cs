@@ -43,7 +43,7 @@ namespace UI
             catch (Exception ex)
             {
 
-                MessageBox.Show($"Error Loading suppliers: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error cargando proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -69,12 +69,12 @@ namespace UI
             {
                 if (txtName.Text.Length < 1)
                 {
-                    MessageBox.Show("The Category needs a name, please insert one", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("La categoria necesita un nombre, por favor ingrese uno", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (_categories.Any(s => s.Name.Equals(txtName.Text, StringComparison.OrdinalIgnoreCase)))
                 {
-                    MessageBox.Show("The Category already exist, please put another name", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("La categoria ya existe, por favor ingrese otro nombre", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -100,7 +100,7 @@ namespace UI
 
                 }
 
-                MessageBox.Show("Category saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Categoria guardada exitosamente!", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Reload data
                 await LoadData();
@@ -110,7 +110,7 @@ namespace UI
             catch (Exception ex)
             {
 
-                MessageBox.Show($"Error saving category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error guardando categoria: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -118,23 +118,23 @@ namespace UI
         {
             if (!selectedCategoryId.HasValue)
             {
-                MessageBox.Show("Please select a category to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, seleccione una categoria a eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (MessageBox.Show("Are you sure you want to delete this category?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Estas seguro de querer eliminar esta categoria?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 try
                 {
                     await _categoryService.DeleteAsync(selectedCategoryId.Value);
-                    MessageBox.Show("Category deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Category eliminada exitosamente!", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     ClearForm();
                     await LoadData();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error deleting category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error eliminando categoria: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
