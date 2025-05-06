@@ -30,7 +30,6 @@ namespace AppGestionLenceria
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             txtName = new TextBox();
             numQuantity = new NumericUpDown();
             label1 = new Label();
@@ -60,7 +59,6 @@ namespace AppGestionLenceria
             numProfitability = new NumericUpDown();
             label13 = new Label();
             txtOrderNumber = new TextBox();
-            errorProviderProduct = new ErrorProvider(components);
             dgvProducts = new AdvancedDataGridView();
             advancedDataGridViewSearchToolBar1 = new AdvancedDataGridViewSearchToolBar();
             ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
@@ -69,7 +67,6 @@ namespace AppGestionLenceria
             ((System.ComponentModel.ISupportInitialize)numRoundedPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numCalculatedPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numProfitability).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)errorProviderProduct).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             SuspendLayout();
             // 
@@ -79,8 +76,8 @@ namespace AppGestionLenceria
             txtName.Name = "txtName";
             txtName.Size = new Size(200, 23);
             txtName.TabIndex = 1;
-            txtName.Validating += txtName_Validating;
-            txtName.Validated += txtName_Validated;
+            //txtName.Validating += txtName_Validating;
+            //txtName.Validated += txtName_Validated;
             // 
             // numQuantity
             // 
@@ -115,8 +112,8 @@ namespace AppGestionLenceria
             numCost.Name = "numCost";
             numCost.Size = new Size(200, 23);
             numCost.TabIndex = 3;
-            numCost.Validating += numCost_Validating;
-            numCost.Validated += numCost_Validated;
+            //numCost.Validating += numCost_Validating;
+            //numCost.Validated += numCost_Validated;
             // 
             // numDiscount
             // 
@@ -126,8 +123,8 @@ namespace AppGestionLenceria
             numDiscount.Size = new Size(200, 23);
             numDiscount.TabIndex = 4;
             numDiscount.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            numDiscount.Validating += numDiscount_Validating;
-            numDiscount.Validated += numDiscount_Validated;
+            //numDiscount.Validating += numDiscount_Validating;
+            //numDiscount.Validated += numDiscount_Validated;
             // 
             // label3
             // 
@@ -153,8 +150,8 @@ namespace AppGestionLenceria
             txtSKU.Name = "txtSKU";
             txtSKU.Size = new Size(200, 23);
             txtSKU.TabIndex = 7;
-            txtSKU.Validating += txtSKU_Validating;
-            txtSKU.Validated += txtSKU_Validated;
+            //txtSKU.Validating += txtSKU_Validating;
+            //txtSKU.Validated += txtSKU_Validated;
             // 
             // label5
             // 
@@ -270,8 +267,8 @@ namespace AppGestionLenceria
             numRoundedPrice.Name = "numRoundedPrice";
             numRoundedPrice.Size = new Size(200, 23);
             numRoundedPrice.TabIndex = 6;
-            numRoundedPrice.Validating += numRoundedPrice_Validating;
-            numRoundedPrice.Validated += numRoundedPrice_Validated;
+            //numRoundedPrice.Validating += numRoundedPrice_Validating;
+            //numRoundedPrice.Validated += numRoundedPrice_Validated;
             // 
             // label10
             // 
@@ -318,8 +315,8 @@ namespace AppGestionLenceria
             numProfitability.Size = new Size(200, 23);
             numProfitability.TabIndex = 8;
             numProfitability.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            numProfitability.Validating += numProfitability_Validating;
-            numProfitability.Validated += numProfitability_Validated;
+            //numProfitability.Validating += numProfitability_Validating;
+            //numProfitability.Validated += numProfitability_Validated;
             // 
             // label13
             // 
@@ -336,12 +333,8 @@ namespace AppGestionLenceria
             txtOrderNumber.Name = "txtOrderNumber";
             txtOrderNumber.Size = new Size(200, 23);
             txtOrderNumber.TabIndex = 9;
-            txtOrderNumber.Validating += txtOrderNumber_Validating;
-            txtOrderNumber.Validated += txtOrderNumber_Validated;
-            // 
-            // errorProviderProduct
-            // 
-            errorProviderProduct.ContainerControl = this;
+            //txtOrderNumber.Validating += txtOrderNumber_Validating;
+            //txtOrderNumber.Validated += txtOrderNumber_Validated;
             // 
             // dgvProducts
             // 
@@ -356,8 +349,8 @@ namespace AppGestionLenceria
             dgvProducts.Size = new Size(847, 582);
             dgvProducts.SortStringChangedInvokeBeforeDatasourceUpdate = true;
             dgvProducts.TabIndex = 17;
-            dgvProducts.SortStringChanged += dgvProducts_SortStringChanged;
-            dgvProducts.FilterStringChanged += dgvProducts_FilterStringChanged;
+            //dgvProducts.SortStringChanged += dgvProducts_SortStringChanged;
+            //dgvProducts.FilterStringChanged += dgvProducts_FilterStringChanged;
             dgvProducts.SelectionChanged += dgvProducts_SelectionChanged_1;
             // 
             // advancedDataGridViewSearchToolBar1
@@ -371,7 +364,7 @@ namespace AppGestionLenceria
             advancedDataGridViewSearchToolBar1.RenderMode = ToolStripRenderMode.Professional;
             advancedDataGridViewSearchToolBar1.Size = new Size(1121, 27);
             advancedDataGridViewSearchToolBar1.TabIndex = 18;
-            advancedDataGridViewSearchToolBar1.Text = "advancedDataGridViewSearchToolBar1";
+            advancedDataGridViewSearchToolBar1.Text = "Busqueda";
             advancedDataGridViewSearchToolBar1.Search += advancedDataGridViewSearchToolBar1_Search;
             // 
             // ProductManagementForm
@@ -420,7 +413,6 @@ namespace AppGestionLenceria
             ((System.ComponentModel.ISupportInitialize)numRoundedPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)numCalculatedPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)numProfitability).EndInit();
-            ((System.ComponentModel.ISupportInitialize)errorProviderProduct).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -456,7 +448,6 @@ namespace AppGestionLenceria
         private NumericUpDown numProfitability;
         private Label label13;
         private TextBox txtOrderNumber;
-        private ErrorProvider errorProviderProduct;
         private AdvancedDataGridView dgvProducts;
         private AdvancedDataGridViewSearchToolBar advancedDataGridViewSearchToolBar1;
     }

@@ -126,6 +126,8 @@ namespace Data.Context
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.LastName).HasMaxLength(100);
+                entity.Property(e => e.DNI_CUIT).HasMaxLength(20);
                 entity.Property(e => e.Phone).HasMaxLength(20);
                 entity.Property(e => e.Email).HasMaxLength(100);
                 entity.Property(e => e.SocialMedia).HasMaxLength(500);

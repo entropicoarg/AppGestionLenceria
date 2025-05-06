@@ -40,6 +40,10 @@
             btnClear = new Button();
             btnDelete = new Button();
             btnSave = new Button();
+            txtLastName = new TextBox();
+            label5 = new Label();
+            txtDNICUIT = new TextBox();
+            label6 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             SuspendLayout();
             // 
@@ -74,7 +78,7 @@
             // 
             // txtPhone
             // 
-            txtPhone.Location = new Point(19, 93);
+            txtPhone.Location = new Point(19, 189);
             txtPhone.Name = "txtPhone";
             txtPhone.Size = new Size(100, 23);
             txtPhone.TabIndex = 2;
@@ -82,7 +86,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(19, 75);
+            label2.Location = new Point(19, 171);
             label2.Name = "label2";
             label2.Size = new Size(52, 15);
             label2.TabIndex = 3;
@@ -90,7 +94,7 @@
             // 
             // txtEMail
             // 
-            txtEMail.Location = new Point(19, 143);
+            txtEMail.Location = new Point(19, 239);
             txtEMail.Name = "txtEMail";
             txtEMail.Size = new Size(100, 23);
             txtEMail.TabIndex = 3;
@@ -98,7 +102,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(19, 125);
+            label3.Location = new Point(19, 221);
             label3.Name = "label3";
             label3.Size = new Size(41, 15);
             label3.TabIndex = 5;
@@ -106,7 +110,7 @@
             // 
             // txtSocialMedia
             // 
-            txtSocialMedia.Location = new Point(19, 193);
+            txtSocialMedia.Location = new Point(19, 289);
             txtSocialMedia.Multiline = true;
             txtSocialMedia.Name = "txtSocialMedia";
             txtSocialMedia.Size = new Size(100, 87);
@@ -115,7 +119,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(19, 175);
+            label4.Location = new Point(19, 271);
             label4.Name = "label4";
             label4.Size = new Size(82, 15);
             label4.TabIndex = 7;
@@ -139,7 +143,7 @@
             btnDelete.TabIndex = 20;
             btnDelete.Text = "Eliminar";
             btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += this.btnDelete_Click;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnSave
             // 
@@ -151,11 +155,47 @@
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
+            // txtLastName
+            // 
+            txtLastName.Location = new Point(19, 90);
+            txtLastName.Name = "txtLastName";
+            txtLastName.Size = new Size(100, 23);
+            txtLastName.TabIndex = 22;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(19, 72);
+            label5.Name = "label5";
+            label5.Size = new Size(51, 15);
+            label5.TabIndex = 23;
+            label5.Text = "Apellido";
+            // 
+            // txtDNICUIT
+            // 
+            txtDNICUIT.Location = new Point(19, 136);
+            txtDNICUIT.Name = "txtDNICUIT";
+            txtDNICUIT.Size = new Size(100, 23);
+            txtDNICUIT.TabIndex = 24;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(19, 118);
+            label6.Name = "label6";
+            label6.Size = new Size(57, 15);
+            label6.TabIndex = 25;
+            label6.Text = "DNI/CUIT";
+            // 
             // CustomerManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(txtDNICUIT);
+            Controls.Add(label6);
+            Controls.Add(txtLastName);
+            Controls.Add(label5);
             Controls.Add(btnClear);
             Controls.Add(btnDelete);
             Controls.Add(btnSave);
@@ -190,5 +230,9 @@
         private Button btnClear;
         private Button btnDelete;
         private Button btnSave;
+        private TextBox txtLastName;
+        private Label label5;
+        private TextBox txtDNICUIT;
+        private Label label6;
     }
 }

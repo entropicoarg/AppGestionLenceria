@@ -36,6 +36,11 @@ namespace AppGestionLenceria
             InitializeComponent();
         }
 
+        protected T GetService<T>() where T : class
+        {
+            return ServiceProvider.GetService<T>();
+        }
+
         private async Task<DataTable> ConvertProductsToDataTableWithRelationsAsync(IEnumerable<Product> products)
         {
 
@@ -124,7 +129,7 @@ namespace AppGestionLenceria
                 clbCategories.Items.Add(category, false);
             }
             clbCategories.DisplayMember = "Name";
-            clbCategories.ValueMember = "Id";
+            clbCategories.ValueMember = "Id";            
         }
 
         private void ClearForm()
@@ -282,135 +287,132 @@ namespace AppGestionLenceria
 
 
 
-        private void numCost_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            string errorMessage;
-            if (!InputsValidator.CostValidator(numCost.Value, out errorMessage))
-            {
-                e.Cancel = true;
-                errorProviderProduct.SetError(numCost, errorMessage);
-            }
+        //private void numCost_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    string errorMessage;
+        //    if (!InputsValidator.CostValidator(numCost.Value, out errorMessage))
+        //    {
+        //        e.Cancel = true;
+        //        errorProviderProduct.SetError(numCost, errorMessage);
+        //    }
 
 
-        }
+        //}
 
-        private void numCost_Validated(object sender, EventArgs e)
-        {
-            SetErrorProvider(numCost);
-        }
+        //private void numCost_Validated(object sender, EventArgs e)
+        //{
+        //    SetErrorProvider(numCost);
+        //}
 
-        private void txtSKU_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            string errorMessage;
-            if (!InputsValidator.SKUValidator(txtSKU.Text.ToUpper(), out errorMessage))
-            {
-                e.Cancel = true;
-                errorProviderProduct.SetError(txtSKU, errorMessage);
-            }
-        }
+        //private void txtSKU_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    string errorMessage;
+        //    if (!InputsValidator.SKUValidator(txtSKU.Text.ToUpper(), out errorMessage))
+        //    {
+        //        e.Cancel = true;
+        //        errorProviderProduct.SetError(txtSKU, errorMessage);
+        //    }
+        //}
 
-        private void numRoundedPrice_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            string errorMessage;
-            if (!InputsValidator.CostValidator(numRoundedPrice.Value, out errorMessage))
-            {
-                e.Cancel = true;
-                errorProviderProduct.SetError(numRoundedPrice, errorMessage);
-            }
-        }
+        //private void numRoundedPrice_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    string errorMessage;
+        //    if (!InputsValidator.CostValidator(numRoundedPrice.Value, out errorMessage))
+        //    {
+        //        e.Cancel = true;
+        //        errorProviderProduct.SetError(numRoundedPrice, errorMessage);
+        //    }
+        //}
 
-        private void txtSKU_Validated(object sender, EventArgs e)
-        {
-            errorProviderProduct.SetError(txtSKU, "");
-        }
+        //private void txtSKU_Validated(object sender, EventArgs e)
+        //{
+        //    errorProviderProduct.SetError(txtSKU, "");
+        //}
 
-        private void numRoundedPrice_Validated(object sender, EventArgs e)
-        {
-            errorProviderProduct.SetError(numRoundedPrice, "");
-        }
+        //private void numRoundedPrice_Validated(object sender, EventArgs e)
+        //{
+        //    errorProviderProduct.SetError(numRoundedPrice, "");
+        //}
 
-        private void numDiscount_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            string errorMessage;
-            if (!InputsValidator.RatesValidator(numDiscount.Value, out errorMessage))
-            {
-                e.Cancel = true;
-                errorProviderProduct.SetError(numDiscount, errorMessage);
-            }
-        }
+        //private void numDiscount_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    string errorMessage;
+        //    if (!InputsValidator.RatesValidator(numDiscount.Value, out errorMessage))
+        //    {
+        //        e.Cancel = true;
+        //        errorProviderProduct.SetError(numDiscount, errorMessage);
+        //    }
+        //}
 
-        private void numDiscount_Validated(object sender, EventArgs e)
-        {
-            SetErrorProvider(numDiscount);
-        }
+        //private void numDiscount_Validated(object sender, EventArgs e)
+        //{
+        //    SetErrorProvider(numDiscount);
+        //}
 
-        private void numProfitability_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            string errorMessage;
-            if (!InputsValidator.RatesValidator(numProfitability.Value, out errorMessage))
-            {
-                e.Cancel = true;
-                errorProviderProduct.SetError(numProfitability, errorMessage);
-            }
-        }
+        //private void numProfitability_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    string errorMessage;
+        //    if (!InputsValidator.RatesValidator(numProfitability.Value, out errorMessage))
+        //    {
+        //        e.Cancel = true;
+        //        errorProviderProduct.SetError(numProfitability, errorMessage);
+        //    }
+        //}
 
-        private void numProfitability_Validated(object sender, EventArgs e)
-        {
-            SetErrorProvider(numProfitability);
-        }
+        //private void numProfitability_Validated(object sender, EventArgs e)
+        //{
+        //    SetErrorProvider(numProfitability);
+        //}
 
-        protected T GetService<T>() where T : class
-        {
-            return ServiceProvider.GetService<T>();
-        }
+        
 
-        private void SetErrorProvider(NumericUpDown num)
-        {
-            numCalculatedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
-            numRoundedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
-            errorProviderProduct.SetError(num, "");
-        }
+        //private void SetErrorProvider(NumericUpDown num)
+        //{
+        //    numCalculatedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
+        //    numRoundedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
+        //    errorProviderProduct.SetError(num, "");
+        //}
 
-        private void txtName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            string errorMessage;
-            if (!InputsValidator.NamesValidator(txtName.Text, out errorMessage))
-            {
-                e.Cancel = true;
-                errorProviderProduct.SetError(txtName, errorMessage);
-            }
-        }
+        //private void txtName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    string errorMessage;
+        //    if (!InputsValidator.NamesValidator(txtName.Text, out errorMessage))
+        //    {
+        //        e.Cancel = true;
+        //        errorProviderProduct.SetError(txtName, errorMessage);
+        //    }
+        //}
 
-        private void txtOrderNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            string errorMessage;
-            if (!InputsValidator.OrderValidator(txtOrderNumber.Text, out errorMessage))
-            {
-                e.Cancel = true;
-                errorProviderProduct.SetError(txtOrderNumber, errorMessage);
-            }
-        }
+        //private void txtOrderNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    string errorMessage;
+        //    if (!InputsValidator.OrderValidator(txtOrderNumber.Text, out errorMessage))
+        //    {
+        //        e.Cancel = true;
+        //        errorProviderProduct.SetError(txtOrderNumber, errorMessage);
+        //    }
+        //}
 
-        private void txtName_Validated(object sender, EventArgs e)
-        {
-            errorProviderProduct.SetError(txtName, "");
-        }
+        //private void txtName_Validated(object sender, EventArgs e)
+        //{
+        //    errorProviderProduct.SetError(txtName, "");
+        //}
 
-        private void txtOrderNumber_Validated(object sender, EventArgs e)
-        {
-            errorProviderProduct.SetError(txtOrderNumber, "");
-        }
+        //private void txtOrderNumber_Validated(object sender, EventArgs e)
+        //{
+        //    errorProviderProduct.SetError(txtOrderNumber, "");
+        //}
 
 
-        private void dgvProducts_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
-        {
+        //private void dgvProducts_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        //{
 
-        }
+        //}
 
-        private void dgvProducts_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
-        {
+        //private void dgvProducts_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
+        //{
 
-        }
+        //}
 
         private async void dgvProducts_SelectionChanged_1(object sender, EventArgs e)
         {

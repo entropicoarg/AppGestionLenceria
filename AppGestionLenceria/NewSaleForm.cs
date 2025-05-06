@@ -66,37 +66,36 @@ namespace UI
                     Customer selectedCustomer = (Customer)cmbCustomer.SelectedItem;
                     Sale newSale = new()
                     {
-
                         SaleDate = dateTimePicker1.Value,
                         PaymentMethod = selectedPaymentMethod,
                         PaymentMethodDetail = txtPaymentMethodDetail.Text,
                         TicketNumber = txtTicketNumber.Text,
                         InvoiceNumber = txtInvoiceNumber.Text,
-                        Customer = selectedCustomer,
                         CustomerId = selectedCustomer.Id,
                     };
 
-                    ICollection<SaleDetail> details = [];
+                    // Create a list of SaleDetail with only the necessary information
+                    List<SaleDetail> details = new List<SaleDetail>();
 
                     foreach (var product in _products)
                     {
-                        SaleDetail newSailDetail = new()
+                        SaleDetail newSaleDetail = new()
                         {
-                            Product = product,
                             ProductId = product.Id,
-                            Sale = newSale,
+                            Quantity = product.Quantity, // Assuming this is the quantity to be sold
+                            UnitPrice = product.RoundedPrice
                         };
-                        details.Add(newSailDetail);
+                        details.Add(newSaleDetail);
                     }
 
-                    _saleService.CreateAsync(newSale, details);
+                    await _saleService.CreateAsync(newSale, details);
+
                     MessageBox.Show($"New sale created.",
                     "Sale Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
                 catch (Exception ex)
                 {
-
                     MessageBox.Show($"Error creating sale: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

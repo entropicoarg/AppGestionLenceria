@@ -42,6 +42,8 @@ namespace UI
             // Add columns
             customerDataTable.Columns.Add("Id", typeof(int));
             customerDataTable.Columns.Add("Nombre", typeof(string));
+            customerDataTable.Columns.Add("Apellido", typeof(string));
+            customerDataTable.Columns.Add("DNI/CUIT", typeof(string));
             customerDataTable.Columns.Add("Telefono", typeof(string));
             customerDataTable.Columns.Add("E-Mail", typeof(string));
             customerDataTable.Columns.Add("Redes Sociales", typeof(string));
@@ -53,10 +55,12 @@ namespace UI
                 var row = customerDataTable.NewRow();
                 row["Id"] = customer.Id;
                 row["Nombre"] = customer.Name;
+                row["Apellido"] = customer.LastName ?? string.Empty;
+                row["DNI/CUIT"] = customer.DNI_CUIT ?? string.Empty;
                 row["Telefono"] = customer.Phone ?? string.Empty;
                 row["E-Mail"] = customer.Email ?? string.Empty;
                 row["Redes Sociales"] = customer.SocialMedia ?? string.Empty;
-
+                
 
                 customerDataTable.Rows.Add(row);
             }
@@ -87,6 +91,8 @@ namespace UI
             txtName.Text = string.Empty;
             txtPhone.Text = string.Empty;
             txtEMail.Text = string.Empty;
+            txtLastName.Text = string.Empty;
+            txtDNICUIT.Text = string.Empty;
             txtSocialMedia.Text = string.Empty;
             _selectedCustomerId = null;
         }
@@ -107,12 +113,12 @@ namespace UI
             {
                 if (txtName.Text.Length < 1)
                 {
-                    MessageBox.Show("The Customer needs a name, please insert one", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("El cliente necesita un nombre, por favor, ingrese uno", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if (_customers.Any(s => s.Name.Equals(txtName.Text, StringComparison.OrdinalIgnoreCase)))
+                if (_customers.FirstOrDefault(s => s.DNI_CUIT == txtDNICUIT.Text) is not null)
                 {
-                    MessageBox.Show("The Customer already exist, please put another name", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("El cliente ya existe, por favor seleccione otro", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -124,6 +130,8 @@ namespace UI
                 {
                     int customerId = _selectedCustomerId.Value;
                     var customer = await _customerService.GetByIdAsync(customerId);
+                    customer.LastName = txtLastName.Text;
+                    customer.DNI_CUIT = txtDNICUIT.Text;
                     customer.Name = txtName.Text;
                     customer.Phone = txtPhone.Text;
                     customer.Email = txtEMail.Text;
@@ -136,6 +144,8 @@ namespace UI
                     var customer = new Customer()
                     {
                         Name = txtName.Text,
+                        LastName = txtLastName.Text,
+                        DNI_CUIT= txtDNICUIT.Text,
                         Phone = txtPhone.Text,
                         Email = txtEMail.Text,
                         SocialMedia = txtSocialMedia.Text
@@ -145,7 +155,7 @@ namespace UI
 
                 }
 
-                MessageBox.Show("Customer saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Cliente guardado exitosamente!", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Reload data
                 await LoadData();
@@ -155,7 +165,7 @@ namespace UI
             catch (Exception ex)
             {
 
-                MessageBox.Show($"Error saving Customer: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error guardando Cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -163,23 +173,23 @@ namespace UI
         {
             if (!_selectedCustomerId.HasValue)
             {
-                MessageBox.Show("Please select a Customer to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, seleccione a un cliente para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (MessageBox.Show("Are you sure you want to delete this Customer?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Estas seguro de querer eliminar a este cliente?", "Confirme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 try
                 {
                     await _customerService.DeleteAsync(_selectedCustomerId.Value);
-                    MessageBox.Show("Customer deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Cliente eliminado exitosamente!", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     ClearForm();
                     await LoadData();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error deleting Customer: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error al eliminar cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
