@@ -172,6 +172,7 @@
             Controls.Add(dgvProducts);
             Name = "SalesManagementForm";
             Text = "SalesManagementForm";
+            WindowState = FormWindowState.Maximized;
             Load += SalesManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvSelectedProducts).EndInit();

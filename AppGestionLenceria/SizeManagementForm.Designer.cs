@@ -39,7 +39,7 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(552, 289);
+            btnClear.Location = new Point(638, 312);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(75, 23);
             btnClear.TabIndex = 16;
@@ -49,7 +49,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(471, 289);
+            btnDelete.Location = new Point(557, 312);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(75, 23);
             btnDelete.TabIndex = 17;
@@ -59,7 +59,7 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(390, 289);
+            btnSave.Location = new Point(476, 312);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 23);
             btnSave.TabIndex = 18;
@@ -87,12 +87,12 @@
             // 
             dgvSizes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvSizes.EditMode = DataGridViewEditMode.EditProgrammatically;
-            dgvSizes.Location = new Point(192, 21);
+            dgvSizes.Location = new Point(148, 44);
             dgvSizes.MultiSelect = false;
             dgvSizes.Name = "dgvSizes";
             dgvSizes.ReadOnly = true;
             dgvSizes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvSizes.Size = new Size(433, 262);
+            dgvSizes.Size = new Size(565, 262);
             dgvSizes.TabIndex = 13;
             dgvSizes.SelectionChanged += dgvSizes_SelectionChanged;
             // 
@@ -107,9 +107,9 @@
             Controls.Add(txtName);
             Controls.Add(label1);
             Controls.Add(dgvSizes);
-            FormBorderStyle = FormBorderStyle.None;
             Name = "SizeManagementForm";
-            Text = "Gestion de tamaños";            
+            Text = "Gestion de tamaños";
+            WindowState = FormWindowState.Maximized;
             Load += SizeManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvSizes).EndInit();
             ResumeLayout(false);

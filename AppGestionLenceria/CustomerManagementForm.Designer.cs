@@ -210,6 +210,7 @@
             Controls.Add(dgvCustomers);
             Name = "CustomerManagementForm";
             Text = "CostumerManagementForm";
+            WindowState = FormWindowState.Maximized;
             Load += CustomerManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
             ResumeLayout(false);

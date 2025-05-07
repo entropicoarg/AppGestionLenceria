@@ -39,7 +39,7 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(543, 280);
+            btnClear.Location = new Point(657, 303);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(75, 23);
             btnClear.TabIndex = 22;
@@ -49,7 +49,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(462, 280);
+            btnDelete.Location = new Point(576, 303);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(75, 23);
             btnDelete.TabIndex = 23;
@@ -59,7 +59,7 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(381, 280);
+            btnSave.Location = new Point(495, 303);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 23);
             btnSave.TabIndex = 24;
@@ -87,12 +87,12 @@
             // 
             dgvColors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvColors.EditMode = DataGridViewEditMode.EditProgrammatically;
-            dgvColors.Location = new Point(183, 12);
+            dgvColors.Location = new Point(119, 35);
             dgvColors.MultiSelect = false;
             dgvColors.Name = "dgvColors";
             dgvColors.ReadOnly = true;
             dgvColors.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvColors.Size = new Size(433, 262);
+            dgvColors.Size = new Size(613, 262);
             dgvColors.TabIndex = 19;
             dgvColors.SelectionChanged += dgvColors_SelectionChanged;
             // 
@@ -107,9 +107,9 @@
             Controls.Add(txtName);
             Controls.Add(label1);
             Controls.Add(dgvColors);
-            FormBorderStyle = FormBorderStyle.None;
             Name = "ColorManagementForm";
-            Text = "Gestion de colores";           
+            Text = "Gestion de colores";
+            WindowState = FormWindowState.Maximized;
             Load += ColorManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvColors).EndInit();
             ResumeLayout(false);

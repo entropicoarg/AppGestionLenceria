@@ -198,6 +198,7 @@
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "NewSaleForm";
             Text = "NewSaleForm";
+            WindowState = FormWindowState.Maximized;
             Load += NewSaleForm_Load;
             groupBoxSale.ResumeLayout(false);
             groupBoxSale.PerformLayout();
