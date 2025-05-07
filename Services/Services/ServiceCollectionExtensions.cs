@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+    
 
 namespace Services.Services
 {
@@ -18,8 +15,34 @@ namespace Services.Services
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ISaleService, SaleService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IPrintService, PrintService>();
+
+            var configuration = BuildConfiguration();
+            services.AddSingleton<IConfiguration>(configuration);
+
+            // Register new print configuration service
+            services.AddSingleton<IPrintConfigurationService, PrintConfigurationService>();
+
+            // Register print service
 
             return services;
+        }
+
+        private static IConfiguration BuildConfiguration()
+        {
+            // Get the base directory of the application
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            // Build configuration
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(baseDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            // If there's a specific environment setting, you could add it here
+            // For example: .AddJsonFile($"appsettings.{environment}.json", optional: true)
+
+            return builder.Build();
         }
     }
 }

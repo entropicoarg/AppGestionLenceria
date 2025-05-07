@@ -1,0 +1,22 @@
+{
+  "TitleFont": {
+    "FontFamily": "Calibri",
+    "Size": 11,
+    "Style": 1
+  },
+  "NormalFont": {
+    "FontFamily": "Calibri",
+    "Size": 9,
+    "Style": 0
+  },
+  "PriceFont": {
+    "FontFamily": "Calibri",
+    "Size": 14,
+    "Style": 1
+  },
+  "StartX": 15,
+  "StartY": 12,
+  "LineHeight": 18,
+  "TitleBottomMargin": 7,
+  "PrinterNameContains": "Brother QL-800"
+}
