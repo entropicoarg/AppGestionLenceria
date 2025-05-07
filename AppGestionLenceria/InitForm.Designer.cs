@@ -30,6 +30,7 @@
         {
             menuStrip1 = new MenuStrip();
             archivoToolStripMenuItem = new ToolStripMenuItem();
+            salirToolStripMenuItem = new ToolStripMenuItem();
             proveedoresToolStripMenuItem = new ToolStripMenuItem();
             gestionToolStripMenuItem = new ToolStripMenuItem();
             productosToolStripMenuItem = new ToolStripMenuItem();
@@ -42,7 +43,6 @@
             coloresToolStripMenuItem1 = new ToolStripMenuItem();
             clientesToolStripMenuItem = new ToolStripMenuItem();
             gestionToolStripMenuItem2 = new ToolStripMenuItem();
-            salirToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -61,6 +61,13 @@
             archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
             archivoToolStripMenuItem.Size = new Size(60, 20);
             archivoToolStripMenuItem.Text = "Archivo";
+            // 
+            // salirToolStripMenuItem
+            // 
+            salirToolStripMenuItem.Name = "salirToolStripMenuItem";
+            salirToolStripMenuItem.Size = new Size(96, 22);
+            salirToolStripMenuItem.Text = "Salir";
+            salirToolStripMenuItem.Click += salirToolStripMenuItem_Click;
             // 
             // proveedoresToolStripMenuItem
             // 
@@ -100,7 +107,7 @@
             // gestionToolStripMenuItem3
             // 
             gestionToolStripMenuItem3.Name = "gestionToolStripMenuItem3";
-            gestionToolStripMenuItem3.Size = new Size(180, 22);
+            gestionToolStripMenuItem3.Size = new Size(114, 22);
             gestionToolStripMenuItem3.Text = "Gestion";
             gestionToolStripMenuItem3.Click += gestionToolStripMenuItem3_Click;
             // 
@@ -146,13 +153,6 @@
             gestionToolStripMenuItem2.Text = "Gestion";
             gestionToolStripMenuItem2.Click += gestionToolStripMenuItem2_Click;
             // 
-            // salirToolStripMenuItem
-            // 
-            salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            salirToolStripMenuItem.Size = new Size(180, 22);
-            salirToolStripMenuItem.Text = "Salir";
-            salirToolStripMenuItem.Click += salirToolStripMenuItem_Click;
-            // 
             // InitForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -162,7 +162,9 @@
             IsMdiContainer = true;
             MainMenuStrip = menuStrip1;
             Name = "InitForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Gestion de Lenceria";
+            WindowState = FormWindowState.Maximized;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

@@ -107,6 +107,7 @@ namespace AppGestionLenceria
             // 
             // numCost
             // 
+            numCost.DecimalPlaces = 2;
             numCost.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
             numCost.Location = new Point(21, 138);
             numCost.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
@@ -116,6 +117,7 @@ namespace AppGestionLenceria
             // 
             // numDiscount
             // 
+            numDiscount.DecimalPlaces = 2;
             numDiscount.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
             numDiscount.Location = new Point(21, 182);
             numDiscount.Name = "numDiscount";
@@ -227,7 +229,7 @@ namespace AppGestionLenceria
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(764, 664);
+            btnSave.Location = new Point(1037, 720);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 23);
             btnSave.TabIndex = 14;
@@ -237,7 +239,7 @@ namespace AppGestionLenceria
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(845, 664);
+            btnDelete.Location = new Point(1118, 720);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(75, 23);
             btnDelete.TabIndex = 15;
@@ -247,7 +249,7 @@ namespace AppGestionLenceria
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(926, 664);
+            btnClear.Location = new Point(1199, 720);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(75, 23);
             btnClear.TabIndex = 16;
@@ -302,6 +304,7 @@ namespace AppGestionLenceria
             // 
             // numProfitability
             // 
+            numProfitability.DecimalPlaces = 2;
             numProfitability.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
             numProfitability.Location = new Point(21, 358);
             numProfitability.Name = "numProfitability";
@@ -331,11 +334,11 @@ namespace AppGestionLenceria
             dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProducts.FilterAndSortEnabled = true;
             dgvProducts.FilterStringChangedInvokeBeforeDatasourceUpdate = true;
-            dgvProducts.Location = new Point(242, 76);
+            dgvProducts.Location = new Point(242, 50);
             dgvProducts.MaxFilterButtonImageHeight = 23;
             dgvProducts.Name = "dgvProducts";
             dgvProducts.RightToLeft = RightToLeft.No;
-            dgvProducts.Size = new Size(847, 582);
+            dgvProducts.Size = new Size(1032, 582);
             dgvProducts.SortStringChangedInvokeBeforeDatasourceUpdate = true;
             dgvProducts.TabIndex = 17;
             dgvProducts.SelectionChanged += dgvProducts_SelectionChanged_1;
@@ -349,7 +352,7 @@ namespace AppGestionLenceria
             advancedDataGridViewSearchToolBar1.MinimumSize = new Size(0, 27);
             advancedDataGridViewSearchToolBar1.Name = "advancedDataGridViewSearchToolBar1";
             advancedDataGridViewSearchToolBar1.RenderMode = ToolStripRenderMode.Professional;
-            advancedDataGridViewSearchToolBar1.Size = new Size(1121, 27);
+            advancedDataGridViewSearchToolBar1.Size = new Size(1350, 27);
             advancedDataGridViewSearchToolBar1.TabIndex = 18;
             advancedDataGridViewSearchToolBar1.Text = "Busqueda";
             advancedDataGridViewSearchToolBar1.Search += advancedDataGridViewSearchToolBar1_Search;
@@ -363,7 +366,7 @@ namespace AppGestionLenceria
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(1121, 774);
+            ClientSize = new Size(1350, 774);
             Controls.Add(advancedDataGridViewSearchToolBar1);
             Controls.Add(dgvProducts);
             Controls.Add(label13);

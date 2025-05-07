@@ -41,12 +41,12 @@
             // 
             dgvCategories.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCategories.EditMode = DataGridViewEditMode.EditProgrammatically;
-            dgvCategories.Location = new Point(239, 57);
+            dgvCategories.Location = new Point(145, 32);
             dgvCategories.MultiSelect = false;
             dgvCategories.Name = "dgvCategories";
             dgvCategories.ReadOnly = true;
             dgvCategories.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCategories.Size = new Size(477, 308);
+            dgvCategories.Size = new Size(571, 308);
             dgvCategories.TabIndex = 0;
             dgvCategories.SelectionChanged += dgvCategories_SelectionChanged;
             // 
@@ -83,7 +83,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(56, 57);
+            label1.Location = new Point(18, 14);
             label1.Name = "label1";
             label1.Size = new Size(51, 15);
             label1.TabIndex = 16;
@@ -91,7 +91,7 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(56, 75);
+            txtName.Location = new Point(18, 32);
             txtName.Name = "txtName";
             txtName.Size = new Size(100, 23);
             txtName.TabIndex = 17;
@@ -107,10 +107,10 @@
             Controls.Add(btnDelete);
             Controls.Add(btnSave);
             Controls.Add(dgvCategories);
-            FormBorderStyle = FormBorderStyle.None;
             Name = "CategoryManagementForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Gestion de categorias";
-            
+            WindowState = FormWindowState.Maximized;
             Load += CategoryManagementForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCategories).EndInit();
             ResumeLayout(false);
