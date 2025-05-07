@@ -15,6 +15,8 @@ namespace AppGestionLenceria
         private readonly ISizeService _sizeService;
         private readonly IColorService _colorService;
         private readonly ICategoryService _categoryService;
+        
+
         protected IServiceProvider ServiceProvider { get; }
 
 
@@ -34,6 +36,8 @@ namespace AppGestionLenceria
             _categoryService = GetService<ICategoryService>();
 
             InitializeComponent();
+            SetupErrorProvider();
+            ConnectValidationEvents();
         }
 
         protected T GetService<T>() where T : class
@@ -161,6 +165,12 @@ namespace AppGestionLenceria
             }
         }
 
+        private void SetupErrorProvider()
+        {
+            errorProviderProduct = new ErrorProvider();
+            errorProviderProduct.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+        }
+
         private async void ProductManagementForm_Load(object sender, EventArgs e)
         {
             await LoadData();
@@ -198,6 +208,12 @@ namespace AppGestionLenceria
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
+            if (!ValidateChildren())
+            {
+                MessageBox.Show("Por favor, solucione los errores de validacion antes de guardar",
+                         "Error de validacion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 bool isUpdating = selectedProductId.HasValue;
@@ -276,143 +292,153 @@ namespace AppGestionLenceria
                         await _categoryService.AddProductCategoryAsync(product.Id, category.Id);
                     }
                 }                                
-                MessageBox.Show("Product saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Producto guardado exitosamente!", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 await LoadData();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error guardan producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void numCost_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.CostValidator(numCost.Value, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(numCost, errorMessage);
+            }
+        }
+
+        private void numCost_Validated(object sender, EventArgs e)
+        {
+            SetErrorProvider(numCost);
+        }
+
+        private void txtSKU_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.SKUValidator(txtSKU.Text.ToUpper(), out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(txtSKU, errorMessage);
+            }
+        }
+
+        private void numRoundedPrice_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.CostValidator(numRoundedPrice.Value, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(numRoundedPrice, errorMessage);
+            }
+        }
+
+        private void txtSKU_Validated(object sender, EventArgs e)
+        {
+            errorProviderProduct.SetError(txtSKU, "");
+        }
+
+        private void numRoundedPrice_Validated(object sender, EventArgs e)
+        {
+            errorProviderProduct.SetError(numRoundedPrice, "");
+        }
+
+        private void numDiscount_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.RatesValidator(numDiscount.Value, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(numDiscount, errorMessage);
+            }
+        }
+
+        private void numDiscount_Validated(object sender, EventArgs e)
+        {
+            SetErrorProvider(numDiscount);
+        }
+
+        private void numProfitability_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.RatesValidator(numProfitability.Value, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(numProfitability, errorMessage);
+            }
+        }
+
+        private void numProfitability_Validated(object sender, EventArgs e)
+        {
+            SetErrorProvider(numProfitability);
+        }
+
+        private void SetErrorProvider(NumericUpDown num)
+        {
+            numCalculatedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
+            numRoundedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
+            errorProviderProduct.SetError(num, "");
+        }
+
+        private void txtName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!InputsValidator.NamesValidator(txtName.Text, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(txtName, errorMessage);
+            }
+        }
+
+        private void txtOrderNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string errorMessage;
+            if (!string.IsNullOrEmpty(txtOrderNumber.Text) && !InputsValidator.OrderValidator(txtOrderNumber.Text, out errorMessage))
+            {
+                e.Cancel = true;
+                errorProviderProduct.SetError(txtOrderNumber, errorMessage);
+            }
+        }
+
+        private void txtName_Validated(object sender, EventArgs e)
+        {
+            errorProviderProduct.SetError(txtName, "");
+        }
+
+        private void txtOrderNumber_Validated(object sender, EventArgs e)
+        {
+            errorProviderProduct.SetError(txtOrderNumber, "");
         }
 
 
 
-        //private void numCost_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    string errorMessage;
-        //    if (!InputsValidator.CostValidator(numCost.Value, out errorMessage))
-        //    {
-        //        e.Cancel = true;
-        //        errorProviderProduct.SetError(numCost, errorMessage);
-        //    }
+        private void ConnectValidationEvents()
+        {
+            // Connect validation events
+            txtName.Validating += txtName_Validating;
+            txtName.Validated += txtName_Validated;
 
+            numCost.Validating += numCost_Validating;
+            numCost.Validated += numCost_Validated;
 
-        //}
+            numDiscount.Validating += numDiscount_Validating;
+            numDiscount.Validated += numDiscount_Validated;
 
-        //private void numCost_Validated(object sender, EventArgs e)
-        //{
-        //    SetErrorProvider(numCost);
-        //}
+            numProfitability.Validating += numProfitability_Validating;
+            numProfitability.Validated += numProfitability_Validated;
 
-        //private void txtSKU_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    string errorMessage;
-        //    if (!InputsValidator.SKUValidator(txtSKU.Text.ToUpper(), out errorMessage))
-        //    {
-        //        e.Cancel = true;
-        //        errorProviderProduct.SetError(txtSKU, errorMessage);
-        //    }
-        //}
+            numRoundedPrice.Validating += numRoundedPrice_Validating;
+            numRoundedPrice.Validated += numRoundedPrice_Validated;
 
-        //private void numRoundedPrice_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    string errorMessage;
-        //    if (!InputsValidator.CostValidator(numRoundedPrice.Value, out errorMessage))
-        //    {
-        //        e.Cancel = true;
-        //        errorProviderProduct.SetError(numRoundedPrice, errorMessage);
-        //    }
-        //}
+            txtSKU.Validating += txtSKU_Validating;
+            txtSKU.Validated += txtSKU_Validated;
 
-        //private void txtSKU_Validated(object sender, EventArgs e)
-        //{
-        //    errorProviderProduct.SetError(txtSKU, "");
-        //}
-
-        //private void numRoundedPrice_Validated(object sender, EventArgs e)
-        //{
-        //    errorProviderProduct.SetError(numRoundedPrice, "");
-        //}
-
-        //private void numDiscount_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    string errorMessage;
-        //    if (!InputsValidator.RatesValidator(numDiscount.Value, out errorMessage))
-        //    {
-        //        e.Cancel = true;
-        //        errorProviderProduct.SetError(numDiscount, errorMessage);
-        //    }
-        //}
-
-        //private void numDiscount_Validated(object sender, EventArgs e)
-        //{
-        //    SetErrorProvider(numDiscount);
-        //}
-
-        //private void numProfitability_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    string errorMessage;
-        //    if (!InputsValidator.RatesValidator(numProfitability.Value, out errorMessage))
-        //    {
-        //        e.Cancel = true;
-        //        errorProviderProduct.SetError(numProfitability, errorMessage);
-        //    }
-        //}
-
-        //private void numProfitability_Validated(object sender, EventArgs e)
-        //{
-        //    SetErrorProvider(numProfitability);
-        //}
-
-        
-
-        //private void SetErrorProvider(NumericUpDown num)
-        //{
-        //    numCalculatedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
-        //    numRoundedPrice.Value = (numCost.Value * numProfitability.Value) * numDiscount.Value;
-        //    errorProviderProduct.SetError(num, "");
-        //}
-
-        //private void txtName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    string errorMessage;
-        //    if (!InputsValidator.NamesValidator(txtName.Text, out errorMessage))
-        //    {
-        //        e.Cancel = true;
-        //        errorProviderProduct.SetError(txtName, errorMessage);
-        //    }
-        //}
-
-        //private void txtOrderNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    string errorMessage;
-        //    if (!InputsValidator.OrderValidator(txtOrderNumber.Text, out errorMessage))
-        //    {
-        //        e.Cancel = true;
-        //        errorProviderProduct.SetError(txtOrderNumber, errorMessage);
-        //    }
-        //}
-
-        //private void txtName_Validated(object sender, EventArgs e)
-        //{
-        //    errorProviderProduct.SetError(txtName, "");
-        //}
-
-        //private void txtOrderNumber_Validated(object sender, EventArgs e)
-        //{
-        //    errorProviderProduct.SetError(txtOrderNumber, "");
-        //}
-
-
-        //private void dgvProducts_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
-        //{
-
-        //}
-
-        //private void dgvProducts_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
-        //{
-
-        //}
+            txtOrderNumber.Validating += txtOrderNumber_Validating;
+            txtOrderNumber.Validated += txtOrderNumber_Validated;
+        }
 
         private async void dgvProducts_SelectionChanged_1(object sender, EventArgs e)
         {

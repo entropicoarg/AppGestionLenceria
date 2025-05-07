@@ -30,6 +30,7 @@ namespace AppGestionLenceria
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             txtName = new TextBox();
             numQuantity = new NumericUpDown();
             label1 = new Label();
@@ -61,6 +62,7 @@ namespace AppGestionLenceria
             txtOrderNumber = new TextBox();
             dgvProducts = new AdvancedDataGridView();
             advancedDataGridViewSearchToolBar1 = new AdvancedDataGridViewSearchToolBar();
+            errorProviderProduct = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numCost).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numDiscount).BeginInit();
@@ -68,6 +70,7 @@ namespace AppGestionLenceria
             ((System.ComponentModel.ISupportInitialize)numCalculatedPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numProfitability).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)errorProviderProduct).BeginInit();
             SuspendLayout();
             // 
             // txtName
@@ -76,8 +79,6 @@ namespace AppGestionLenceria
             txtName.Name = "txtName";
             txtName.Size = new Size(200, 23);
             txtName.TabIndex = 1;
-            //txtName.Validating += txtName_Validating;
-            //txtName.Validated += txtName_Validated;
             // 
             // numQuantity
             // 
@@ -112,8 +113,6 @@ namespace AppGestionLenceria
             numCost.Name = "numCost";
             numCost.Size = new Size(200, 23);
             numCost.TabIndex = 3;
-            //numCost.Validating += numCost_Validating;
-            //numCost.Validated += numCost_Validated;
             // 
             // numDiscount
             // 
@@ -123,8 +122,6 @@ namespace AppGestionLenceria
             numDiscount.Size = new Size(200, 23);
             numDiscount.TabIndex = 4;
             numDiscount.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            //numDiscount.Validating += numDiscount_Validating;
-            //numDiscount.Validated += numDiscount_Validated;
             // 
             // label3
             // 
@@ -150,8 +147,6 @@ namespace AppGestionLenceria
             txtSKU.Name = "txtSKU";
             txtSKU.Size = new Size(200, 23);
             txtSKU.TabIndex = 7;
-            //txtSKU.Validating += txtSKU_Validating;
-            //txtSKU.Validated += txtSKU_Validated;
             // 
             // label5
             // 
@@ -267,8 +262,6 @@ namespace AppGestionLenceria
             numRoundedPrice.Name = "numRoundedPrice";
             numRoundedPrice.Size = new Size(200, 23);
             numRoundedPrice.TabIndex = 6;
-            //numRoundedPrice.Validating += numRoundedPrice_Validating;
-            //numRoundedPrice.Validated += numRoundedPrice_Validated;
             // 
             // label10
             // 
@@ -315,8 +308,6 @@ namespace AppGestionLenceria
             numProfitability.Size = new Size(200, 23);
             numProfitability.TabIndex = 8;
             numProfitability.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            //numProfitability.Validating += numProfitability_Validating;
-            //numProfitability.Validated += numProfitability_Validated;
             // 
             // label13
             // 
@@ -333,8 +324,6 @@ namespace AppGestionLenceria
             txtOrderNumber.Name = "txtOrderNumber";
             txtOrderNumber.Size = new Size(200, 23);
             txtOrderNumber.TabIndex = 9;
-            //txtOrderNumber.Validating += txtOrderNumber_Validating;
-            //txtOrderNumber.Validated += txtOrderNumber_Validated;
             // 
             // dgvProducts
             // 
@@ -349,8 +338,6 @@ namespace AppGestionLenceria
             dgvProducts.Size = new Size(847, 582);
             dgvProducts.SortStringChangedInvokeBeforeDatasourceUpdate = true;
             dgvProducts.TabIndex = 17;
-            //dgvProducts.SortStringChanged += dgvProducts_SortStringChanged;
-            //dgvProducts.FilterStringChanged += dgvProducts_FilterStringChanged;
             dgvProducts.SelectionChanged += dgvProducts_SelectionChanged_1;
             // 
             // advancedDataGridViewSearchToolBar1
@@ -366,6 +353,10 @@ namespace AppGestionLenceria
             advancedDataGridViewSearchToolBar1.TabIndex = 18;
             advancedDataGridViewSearchToolBar1.Text = "Busqueda";
             advancedDataGridViewSearchToolBar1.Search += advancedDataGridViewSearchToolBar1_Search;
+            // 
+            // errorProviderProduct
+            // 
+            errorProviderProduct.ContainerControl = this;
             // 
             // ProductManagementForm
             // 
@@ -414,6 +405,7 @@ namespace AppGestionLenceria
             ((System.ComponentModel.ISupportInitialize)numCalculatedPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)numProfitability).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
+            ((System.ComponentModel.ISupportInitialize)errorProviderProduct).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -450,5 +442,6 @@ namespace AppGestionLenceria
         private TextBox txtOrderNumber;
         private AdvancedDataGridView dgvProducts;
         private AdvancedDataGridViewSearchToolBar advancedDataGridViewSearchToolBar1;
+        private ErrorProvider errorProviderProduct;
     }
 }
